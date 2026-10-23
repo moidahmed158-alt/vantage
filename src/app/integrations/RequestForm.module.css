@@ -1,0 +1,19 @@
+.form { padding: clamp(22px, 3.4vw, 44px); }
+
+.head { display: flex; flex-direction: column; }
+/* Empty live regions take no space; a notice inside gets its own spacing. */
+.live > * { margin-top: 18px; }
+
+.err { animation: errIn .35s var(--ease-out) both; }
+.err svg { flex: none; }
+
+@keyframes errIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.submit { align-self: flex-start; }
+
+@media (max-width: 560px) {
+  .submit { align-self: stretch; }
+}

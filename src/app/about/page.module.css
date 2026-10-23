@@ -1,0 +1,252 @@
+/* About page. Overrides of global v-* rules use a parent + child selector so they win regardless of CSS load order. */
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(72px, 9vw, 104px) clamp(64px, 8vw, 96px);
+}
+.heroTitle {
+  font-size: clamp(2.6rem, 6.2vw, 5.8rem);
+  margin-top: 28px;
+  max-width: 16ch;
+}
+.heroCols {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
+  gap: 40px 72px;
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line2);
+}
+.heroCols > .heroLead {
+  color: var(--fg);
+}
+
+/* ---------- the name & the mark ---------- */
+.markGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 64px;
+  align-items: center;
+}
+.radarBox {
+  width: 100%;
+  max-width: 460px;
+  margin-inline: auto;
+}
+.markLayer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+/* Hold the mark's draw-in until the radar scrolls into view, so it plays where it can be seen. */
+:global(.js) .radarBox:not(:global(.is-in)) :global(.v-mark) * {
+  animation-play-state: paused;
+}
+.markText {
+  gap: 24px;
+}
+.markText > .motto {
+  font-size: 1.6rem;
+  letter-spacing: -.01em;
+}
+
+/* ---------- principles ---------- */
+.principles {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.principles > .principle {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 32px;
+}
+.principleNum {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.principleNum::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(92, 200, 255, .35), transparent);
+}
+.principleBody {
+  font-size: 16px;
+}
+
+/* ---------- who we work with ---------- */
+.whoHead {
+  gap: 20px;
+}
+.who {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--line2);
+}
+.whoRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 46ch);
+  gap: 8px 32px;
+  align-items: baseline;
+  padding: 26px 0;
+  border-top: 1px solid var(--line2);
+}
+/* Signal line that sweeps across the row's top rule on hover. */
+.whoRow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--cyan2), var(--blue2) 55%, transparent);
+  box-shadow: 0 0 10px var(--cyan);
+  transition: transform .6s var(--ease-out);
+  pointer-events: none;
+}
+.whoTitle {
+  transition: color .25s;
+}
+.whoBody {
+  font-size: 16px;
+}
+@media (hover: hover) {
+  .whoRow:hover::before {
+    transform: scaleX(1);
+  }
+  .whoRow:hover .whoTitle {
+    color: var(--cyan2);
+  }
+}
+
+/* ---------- team ---------- */
+.team {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.team > .member {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.photo {
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(47, 140, 255, .25), transparent 60%),
+    repeating-linear-gradient(135deg, var(--ink4) 0 12px, var(--ink3) 12px 24px);
+  border-bottom: 1px solid var(--line2);
+  transition: filter .4s var(--ease);
+}
+@media (hover: hover) {
+  .member:hover .photo {
+    filter: brightness(1.18);
+  }
+}
+.caption {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+/* Long [PLACEHOLDER] chips wrap inside narrow cards instead of being clipped. */
+.caption :global(.v-ph) {
+  white-space: normal;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.name {
+  font-size: 18px;
+}
+.bio {
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1180px) {
+  .principles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 1080px) {
+  .markGrid {
+    gap: 48px;
+  }
+}
+@media (max-width: 860px) {
+  /* One card per row, photo beside the caption, instead of a 2 + 1 grid. */
+  .team {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .team > .member {
+    flex-direction: row;
+  }
+  .photo {
+    flex: 0 0 38%;
+    aspect-ratio: auto;
+    min-height: 180px;
+    border-bottom: 0;
+    border-right: 1px solid var(--line2);
+  }
+  .caption {
+    justify-content: center;
+  }
+}
+@media (max-width: 760px) {
+  .heroTitle {
+    margin-top: 22px;
+  }
+  .heroCols {
+    margin-top: 40px;
+    padding-top: 28px;
+    gap: 20px;
+  }
+  .radarBox {
+    max-width: 340px;
+  }
+  .principles > .principle {
+    padding: 26px;
+  }
+}
+@media (max-width: 560px) {
+  .principles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .principles > .principle {
+    padding: 24px 22px;
+  }
+  .whoRow {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 22px 0;
+  }
+  .team > .member {
+    flex-direction: column;
+  }
+  .photo {
+    flex: none;
+    aspect-ratio: 16 / 10;
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line2);
+  }
+  .caption {
+    padding: 22px;
+  }
+}

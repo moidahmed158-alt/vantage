@@ -1,0 +1,65 @@
+.headMain {
+  gap: 16px;
+}
+.field {
+  width: min(100%, 380px);
+  flex: none;
+}
+.count {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  transition: color .2s;
+}
+.count[data-filtered="true"] {
+  color: var(--cyan2);
+}
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+  gap: 0 48px;
+}
+.item {
+  padding: 24px 0;
+  border-top: 1px solid var(--line2);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  transition: border-color .3s;
+}
+.item:hover {
+  border-top-color: var(--line4);
+}
+.term {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.termName {
+  color: var(--cyan2);
+}
+.def {
+  font-size: 16px;
+}
+.hit {
+  background: rgba(47, 140, 255, .28);
+  color: var(--fg);
+  border-radius: 3px;
+  padding: 0 1px;
+  box-shadow: 0 0 0 1px rgba(92, 200, 255, .35);
+}
+.termName .hit {
+  color: #fff;
+}
+.empty {
+  margin-top: 16px;
+}
+
+@media (max-width: 760px) {
+  .item {
+    padding: 20px 0;
+  }
+}

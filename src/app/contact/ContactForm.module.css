@@ -1,0 +1,134 @@
+/* Contact — strategy call form.
+   Selectors that override a global .v-* property are compounded with it (`.x:global(.v-y)`) so they
+   win regardless of stylesheet order. */
+
+.form:global(.v-panel) {
+  padding: clamp(22px, 3.4vw, 48px);
+}
+
+/* Desktop: keep the form beside the reader while the left column scrolls past.
+   It sticks just below the header; when the panel is taller than the viewport it sticks by its bottom
+   edge instead, so the Back/Continue row never sits off-screen. --form-h is measured in ContactForm
+   (falls back to a plain top offset without JS). */
+@media (min-width: 1081px) {
+  .form:global(.v-panel) {
+    position: sticky;
+    top: min(calc(var(--hdr-h) + 28px), calc(100vh - var(--form-h, 0px) - 24px));
+  }
+}
+
+.flow { gap: 26px; }
+.head { gap: 14px; }
+
+.title:global(.v-h3) {
+  font-size: clamp(1.55rem, 1.2rem + 1.1vw, 1.9rem);
+  scroll-margin-top: 24px;
+}
+
+/* ---------- step indicator ---------- */
+.steps:global(.v-steps) { flex-wrap: nowrap; min-width: 0; }
+.step { flex: none; white-space: nowrap; }
+.sep:global(.v-step-sep) {
+  flex: 0 1 28px;
+  width: auto;
+  min-width: 10px;
+  transition: background-color .35s, box-shadow .35s;
+}
+.sep[data-done="true"] {
+  background: linear-gradient(90deg, var(--cyan), var(--blue2));
+  box-shadow: 0 0 8px rgba(92, 200, 255, .55);
+}
+.step[data-state="done"] { color: var(--fg3); }
+
+/* Narrow phones: only the current step keeps a visible label (others stay readable to screen readers). */
+@media (max-width: 420px) {
+  .step:not([data-state="current"]) .stepLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* ---------- step panes ---------- */
+.pane { gap: 22px; }
+.pane[data-dir="fwd"] { animation-name: paneFwd; }
+.pane[data-dir="back"] { animation-name: paneBack; }
+
+@keyframes paneFwd {
+  from { opacity: 0; transform: translateX(22px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes paneBack {
+  from { opacity: 0; transform: translateX(-22px); }
+  to { opacity: 1; transform: none; }
+}
+
+.fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.legend { padding: 0; margin-bottom: 10px; }
+
+/* checkbox tiles get the same invalid treatment as .v-input[aria-invalid] */
+.form :global(.v-check):has(> input[aria-invalid="true"]) {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(255, 138, 138, .14);
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.goals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: 8px;
+}
+
+/* ---------- back / continue ---------- */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px solid var(--line2);
+}
+.navHint { flex: 1; }
+
+@media (max-width: 560px) {
+  .navHint { flex-basis: 100%; order: -1; }
+  .nav > :global(.v-btn) { flex: 1 1 auto; }
+}
+
+/* ---------- success ---------- */
+.done { gap: 22px; }
+.doneIcon:global(.v-icon) { width: 52px; height: 52px; }
+.doneTitle:global(.v-h3) {
+  font-size: clamp(1.6rem, 1.2rem + 1.3vw, 2rem);
+  scroll-margin-top: 24px;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 10px 16px;
+  font-size: 15px;
+  padding: 18px 20px;
+  background: var(--ink1);
+  border: 1px solid var(--line2);
+  border-radius: 14px;
+}
+.summary dd { overflow-wrap: anywhere; }
+
+@media (max-width: 560px) {
+  .summary { grid-template-columns: minmax(0, 1fr); gap: 2px; padding: 16px 18px; }
+  .summary dd + dt { margin-top: 12px; }
+}

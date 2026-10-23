@@ -1,0 +1,256 @@
+/* Services overview — page-specific styles. Tokens and v-* classes come from globals.css. */
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(56px, 8vw, 96px) clamp(72px, 9vw, 112px);
+}
+.heroSplit:global(.v-split) { align-items: center; }
+.heroCopy { gap: clamp(22px, 2.4vw, 28px); }
+
+/* Three stacked layers: narrow on top, full-width foundation. */
+.diagram {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+/* spine that ties the layers together, visible in the gaps */
+.diagram::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 6%;
+  bottom: 16%;
+  width: 1px;
+  z-index: -1;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, rgba(92, 200, 255, .6) 25%, rgba(92, 200, 255, .6) 75%, transparent);
+  box-shadow: 0 0 10px rgba(92, 200, 255, .5);
+}
+/* soft light pooling under the foundation */
+.diagram::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 18px;
+  height: 48px;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(47, 140, 255, .5), transparent);
+  filter: blur(14px);
+  pointer-events: none;
+}
+.diagram .layer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 22px;
+}
+.layer1 { width: 74%; }
+.layer2 { width: 87%; }
+.layer3 {
+  width: 100%;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--blue-d), var(--blue));
+  border: 1px solid rgba(143, 224, 255, .5);
+  box-shadow: 0 0 50px -12px rgba(47, 140, 255, .9), inset 0 1px 0 rgba(255, 255, 255, .18);
+}
+.layer3 :global(.v-num) { color: var(--ice); }
+.layer3 :global(.v-chip) {
+  background: rgba(4, 7, 14, .3);
+  border-color: rgba(207, 230, 255, .4);
+  color: #fff;
+}
+.layerHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.diagram .layerTitle { font-size: 21px; }
+.caption { margin-top: 8px; text-align: center; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ---------- layers ---------- */
+.layers {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(64px, 8vw, 96px);
+}
+.layerIntro { gap: 18px; }
+.layerMeta { display: flex; align-items: center; gap: 14px; }
+
+/* mini stack glyph, current layer lit */
+.glyph {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 34px;
+  flex: none;
+}
+.glyph i {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line3);
+  transition: background-color .3s, box-shadow .3s;
+}
+.glyph i:nth-child(1) { width: 74%; }
+.glyph i:nth-child(2) { width: 87%; }
+.glyph i:nth-child(3) { width: 100%; }
+.glyph i[data-on] {
+  background: linear-gradient(90deg, var(--blue2), var(--cyan2));
+  box-shadow: 0 0 10px rgba(92, 200, 255, .8);
+}
+
+.svcGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: 16px;
+}
+.svcGrid .svcCard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 280px;
+}
+.svcGrid .svcLink:focus-visible { border-radius: 18px; }
+.svcIcon { transition: border-color .3s, box-shadow .3s, transform .35s var(--ease); }
+
+.small { font-size: 15.5px; }
+.cta { margin-top: auto; color: var(--cyan2); align-self: flex-start; }
+
+@media (hover: hover) {
+  .svcCard:hover .svcIcon {
+    border-color: rgba(143, 224, 255, .7);
+    box-shadow: 0 0 28px -4px rgba(92, 200, 255, .85);
+    transform: translateY(-2px);
+  }
+  .svcLink:hover :global(.v-arrow),
+  .start:hover .cta :global(.v-arrow) { transform: translateX(4px); }
+  .svcLink:hover .cta { color: #fff; }
+}
+
+/* ---------- reporting ---------- */
+.report {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: clamp(18px, 2.6vw, 32px);
+}
+.reportHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.reportTitle { display: flex; gap: 10px; align-items: center; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.kpis .kpi {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  border-radius: 14px;
+}
+.kpi .kpiLabel { font-size: 10.5px; }
+.kpi .kpiSkel { height: 22px; margin-top: 10px; border-radius: 6px; }
+
+.channels { gap: 12px; }
+.bars {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 12px 14px;
+  align-items: center;
+  font-size: 14px;
+  color: var(--fg2);
+}
+.barLabel { min-width: 0; }
+.track {
+  display: block;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(27, 42, 71, .5);
+}
+/* bars grow in once the panel is revealed */
+.bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  transition: transform 1.2s var(--ease-out);
+}
+.report:global(.is-in) .bar,
+:global(html:not(.js)) .bar { transform: none; }
+.hot { background: linear-gradient(90deg, var(--blue), var(--cyan2)); box-shadow: 0 0 14px rgba(92, 200, 255, .6); }
+.warm { background: linear-gradient(90deg, var(--blue), var(--cyan)); box-shadow: 0 0 12px rgba(47, 140, 255, .5); }
+.mid { background: linear-gradient(90deg, var(--blue-d), var(--blue2)); }
+.low { background: var(--line4); }
+
+.reportCopy { gap: 24px; }
+
+/* ---------- starting points ---------- */
+.start:global(.v-card) {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 32px;
+}
+.startBody { font-size: 16px; }
+
+/* ---------- principles ---------- */
+.principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: 36px;
+}
+.principle {
+  position: relative;
+  gap: 10px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line2);
+}
+.principle :global(.v-dot) { position: absolute; top: -4px; left: 0; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1080px) {
+  .diagram { max-width: 560px; margin-inline: auto; }
+}
+@media (max-width: 760px) {
+  .layer3 { border-radius: 16px; }
+  .svcGrid .svcLink:focus-visible { border-radius: 16px; }
+  .start:global(.v-card) { padding: 26px 22px; }
+  .principles { gap: 28px; }
+}
+@media (max-width: 560px) {
+  .diagram { gap: 10px; }
+  .diagram .layer { padding: 16px; gap: 10px; }
+  .layer1 { width: 84%; }
+  .layer2 { width: 92%; }
+  .diagram .layerTitle { font-size: 18px; }
+  .diagram :global(.v-chip) { min-height: 30px; padding: 0 11px; font-size: 13px; }
+  .svcGrid .svcCard { min-height: 0; }
+  .kpis { grid-template-columns: minmax(0, 1fr); }
+  .kpis .kpi { flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 14px; }
+  .kpi .kpiSkel { margin-top: 0; flex: none; max-width: 45%; }
+}
+@media (max-width: 420px) {
+  .layer1 { width: 88%; }
+  .layer2 { width: 94%; }
+  .bars { grid-template-columns: 104px minmax(0, 1fr); gap: 10px 12px; font-size: 13px; }
+}

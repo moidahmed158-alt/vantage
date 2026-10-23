@@ -1,0 +1,35 @@
+/* Two panes side by side; a single column on phones, where the divider moves from the side to the bottom. */
+.body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.feed { padding: 20px; display: flex; flex-direction: column; gap: 12px; border-right: 1px solid var(--line2); min-width: 0; }
+.reply { padding: 20px; display: flex; flex-direction: column; gap: 12px; background: rgba(4, 7, 14, .5); min-width: 0; }
+
+/* ---------- review cards ---------- */
+.review.review { padding: 14px; display: flex; flex-direction: column; gap: 8px; border-radius: 14px; }
+.hot.hot { border-color: var(--cyan); box-shadow: 0 0 30px -10px rgba(92, 200, 255, .8), inset 0 1px 0 rgba(125, 184, 255, .07); }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 6px 10px; flex-wrap: wrap; }
+.top .source { font-size: 10px; }
+.starOff { color: var(--line3); }
+.quote { font-size: 14px; line-height: 1.5; color: var(--fg2); }
+.ok {
+  align-self: flex-start; font-size: 12px; line-height: 1.3; color: #b7f5dc; padding: 4px 8px; border-radius: 6px;
+  background: rgba(110, 231, 183, .1); border: 1px solid rgba(110, 231, 183, .35);
+}
+.review .status { align-self: flex-start; }
+
+/* ---------- suggested reply ---------- */
+.reply .replyTag { color: var(--cyan2); }
+.bubble { font-size: 14px; line-height: 1.6; color: var(--fg2); background: var(--ink3); border: 1px solid var(--line3); border-radius: 12px; padding: 14px; }
+.caret {
+  display: inline-block; width: 2px; height: 1.05em; margin-left: 3px; vertical-align: -.2em; border-radius: 1px;
+  background: var(--cyan2); box-shadow: 0 0 8px var(--cyan); animation: caretBlink 1.1s steps(1) infinite;
+}
+@keyframes caretBlink { 50% { opacity: 0; } }
+.checks { display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.4; color: #b7f5dc; }
+.checks li { display: flex; gap: 8px; align-items: flex-start; }
+.checks svg { flex: none; margin-top: 1px; }
+
+@media (max-width: 560px) {
+  .body { grid-template-columns: minmax(0, 1fr); }
+  .feed { border-right: 0; border-bottom: 1px solid var(--line2); }
+  .feed, .reply { padding: 16px; }
+}

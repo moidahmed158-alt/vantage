@@ -1,0 +1,48 @@
+/* Specialties — page-level styles (hero + closing CTA). The filter/cards live in SpecialtyBrowser.module.css. */
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(56px, 8vw, 96px) clamp(56px, 6.5vw, 80px);
+}
+.title { margin-top: 24px; max-width: 20ch; }
+
+/* lead + three factor cards on one row on wide screens */
+.factors {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: clamp(40px, 5vw, 56px);
+}
+.factorsLead { align-self: center; }
+.factors .factor { display: flex; flex-direction: column; gap: 8px; }
+.factorText { font-size: 16px; }
+
+/* ---------- directory ---------- */
+.directory:global(.v-sec) { padding-top: clamp(48px, 6vw, 64px); }
+
+/* ---------- CTA ---------- */
+.ctaHead { gap: 20px; }
+.ctaBody { gap: 24px; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1180px) {
+  .factors { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .factorsLead { grid-column: 1 / -1; }
+}
+/* compact rows: label left, text right */
+@media (max-width: 860px) {
+  .factors { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .factorsLead { margin-bottom: 8px; }
+  .factors .factor {
+    display: grid;
+    grid-template-columns: minmax(110px, 150px) minmax(0, 1fr);
+    gap: 6px 20px;
+    align-items: baseline;
+  }
+}
+@media (max-width: 420px) {
+  .factors .factor { display: flex; flex-direction: column; gap: 6px; }
+}

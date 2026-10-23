@@ -1,0 +1,22 @@
+.page { position: relative; isolation: isolate; overflow: hidden; min-height: min(calc(100svh - var(--hdr-h)), 820px); display: flex; align-items: center; padding-block: 96px; }
+.grid {
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 30% 50%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 70% at 30% 50%, #000 20%, transparent 75%);
+}
+.layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 56px; align-items: center; }
+.row { font-size: 22px; min-height: 72px; }
+
+/* a faint radar behind the content with one blip drifting off the edge */
+.radar { position: absolute; z-index: -1; right: -12%; top: 50%; width: min(760px, 90vw); transform: translateY(-50%); opacity: .45; pointer-events: none; }
+.lost {
+  position: absolute; left: 88%; top: 18%; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--amber2); box-shadow: 0 0 14px var(--amber);
+  animation: drift 6s ease-in-out infinite alternate;
+}
+@keyframes drift { to { transform: translate(40px, -24px); opacity: .3; } }
+
+@media (max-width: 760px) {
+  .page { padding-block: 64px; }
+  .radar { right: -40%; top: 30%; opacity: .3; }
+  .row { font-size: 19px; min-height: 64px; }
+}

@@ -1,0 +1,74 @@
+/* Contact page.
+   Selectors that override a global .v-* property are compounded with it (`.x:global(.v-y)`) so they
+   win regardless of stylesheet order. */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* clip (not hidden) so the sticky form column keeps working */
+  overflow: clip;
+}
+
+.orb {
+  width: min(560px, 110vw);
+  height: min(560px, 110vw);
+  right: -120px;
+  top: 80px;
+}
+
+.wrap { padding-block: clamp(44px, 6.5vw, 80px) clamp(80px, 9vw, 120px); }
+
+.split:global(.v-split) { gap: 72px; }
+
+.intro { gap: 40px; }
+.introHead { gap: 24px; }
+
+/* ---------- what happens next ---------- */
+.nextCard:global(.v-card) {
+  padding: clamp(22px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* section labels are real headings, styled as the design's mono tags */
+.tagHeading { font-weight: 400; }
+.cardTag:global(.v-tag) { color: var(--cyan2); }
+
+.nextRows:global(.v-rows) > li {
+  grid-template-columns: 40px minmax(0, 1fr);
+  padding: 16px 0;
+}
+.nextRows :global(.v-num) {
+  padding-top: 3px;
+  transition: color .25s, text-shadow .25s;
+}
+@media (hover: hover) {
+  .nextRows > li:hover :global(.v-num) {
+    color: var(--cyan2);
+    text-shadow: 0 0 12px rgba(92, 200, 255, .6);
+  }
+}
+.rowBody { font-size: 15px; }
+
+/* ---------- direct contact ---------- */
+.direct { gap: 14px; }
+.email:global(.v-alink) {
+  align-self: flex-start;
+  max-width: 100%;
+  font-size: clamp(16px, 4.4vw, 18px);
+  color: var(--cyan2);
+  overflow-wrap: anywhere;
+}
+.email:global(.v-alink):hover { color: #fff; }
+
+@media (max-width: 1080px) {
+  .split:global(.v-split) { gap: 56px; }
+}
+
+@media (max-width: 760px) {
+  .split:global(.v-split) { gap: 44px; }
+  .intro { gap: 32px; }
+  .introHead { gap: 20px; }
+}

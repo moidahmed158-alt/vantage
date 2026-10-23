@@ -1,0 +1,60 @@
+.query { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- map pack ---------- */
+.pack.pack { padding: 0; overflow: hidden; }
+
+.map {
+  position: relative; height: clamp(112px, 24vw, 150px); overflow: hidden; isolation: isolate;
+  background: radial-gradient(circle at 32% 45%, rgba(47, 140, 255, .35), transparent 40%), var(--ink2);
+  border-bottom: 1px solid var(--line2);
+}
+.map::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background-image: linear-gradient(rgba(47, 140, 255, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(47, 140, 255, .08) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.roads { position: absolute; inset: 0; width: 100%; height: 100%; }
+.road { fill: none; stroke: var(--line3); stroke-width: 5; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .7; }
+.lane { fill: none; stroke: var(--line2); stroke-width: 2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+
+/* Pins are positioned in % of the map box, so they stay inside it at every width. */
+.pinMain {
+  position: absolute; left: 30%; top: 38%; width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--blue);
+  box-shadow: 0 0 0 6px rgba(47, 140, 255, .25), 0 0 26px rgba(92, 200, 255, .9);
+}
+.pinMain svg { position: relative; }
+.pinMain .pulse { width: 44px; height: 44px; }
+.pinDot { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--line4); box-shadow: 0 0 0 4px rgba(47, 91, 168, .2); }
+.pinA { left: 62%; top: 30%; }
+.pinB { left: 76%; top: 62%; }
+
+.list { padding: 10px 16px; }
+.row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line2); }
+.row:last-child { border-bottom: 0; }
+.rowText { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.name { font-size: 14.5px; line-height: 1.35; }
+.meta { font-size: 12.5px; line-height: 1.4; color: var(--fg3); }
+.rankOn {
+  flex: none; font: 600 12px/1 var(--sans); background: var(--blue); color: #fff; padding: 7px 10px; border-radius: 6px;
+  box-shadow: 0 0 14px -2px rgba(47, 140, 255, .9);
+}
+.rank { flex: none; font-size: 12px; color: var(--fg3); padding-inline: 10px; }
+
+.dim { opacity: .6; }
+.dim .skTitle { width: min(130px, 62%); }
+.dim .skLine { width: min(180px, 88%); height: 7px; margin-top: 8px; }
+.dim:nth-child(3) .skTitle { width: min(110px, 52%); }
+.dim:nth-child(3) .skLine { width: min(160px, 78%); }
+
+/* ---------- organic result ---------- */
+.organic.organic { padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.url { font-size: 12.5px; color: var(--fg4); overflow-wrap: anywhere; }
+.title { font-size: 16px; line-height: 1.35; color: var(--cyan2); }
+.desc { font-size: 13.5px; color: var(--fg3); }
+
+@media (max-width: 420px) {
+  .list { padding: 6px 14px; }
+  .organic.organic { padding: 12px 14px; }
+  .title { font-size: 15px; }
+}

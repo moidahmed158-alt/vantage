@@ -1,0 +1,173 @@
+/* Pricing page. Overrides of global v-* rules use a parent + child selector so they win regardless of CSS load order. */
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  text-align: center;
+  padding-block: clamp(64px, 8vw, 88px) 40px;
+}
+.heroOrb {
+  --orb-w: min(700px, 130vw);
+  width: var(--orb-w);
+  height: 420px;
+  left: 50%;
+  top: -160px;
+  margin-left: calc(var(--orb-w) / -2);
+}
+.heroStack {
+  gap: 22px;
+  align-items: center;
+}
+.heroLead {
+  margin-inline: auto;
+}
+
+/* ---------- plans (cards: src/components/site/PlanCards) ---------- */
+.planNote {
+  text-align: center;
+  margin: 28px auto 0;
+  max-width: 72ch;
+}
+
+/* ---------- trust strip ---------- */
+.trustSec .trust {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.trust > div {
+  transition: border-color .3s var(--ease), background-color .3s;
+}
+.trust > div > strong {
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: -.01em;
+  line-height: 1.3;
+}
+@media (hover: hover) {
+  .trust > div:hover {
+    border-color: var(--line3);
+    background-color: rgba(13, 24, 46, .85);
+  }
+}
+
+/* ---------- comparison table ---------- */
+.hint {
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font: 500 11.5px/1.3 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--fg4);
+}
+.hint svg {
+  color: var(--cyan2);
+  animation: hintNudge 1.8s var(--ease) infinite;
+}
+@keyframes hintNudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+/* Right-edge glow while more columns are off-screen; the "local" cover hides it once scrolled to the end. */
+.compare .tableWrap {
+  background:
+    linear-gradient(to left, var(--ink2) 45%, rgba(7, 13, 26, 0)) right center / 56px 100% no-repeat local,
+    radial-gradient(farthest-side at 100% 50%, rgba(47, 140, 255, .28), rgba(47, 140, 255, 0)) right center / 18px 100% no-repeat scroll,
+    var(--ink2);
+}
+/* Separate borders so the sticky column keeps its borders while scrolling. */
+.compare .table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.compare .corner {
+  width: 34%;
+  left: 0;
+  z-index: 3;
+  box-shadow: inset -1px 0 0 var(--line3);
+}
+/* Sticky, opaque row labels so the feature name stays visible while the plan columns scroll. */
+.compare .rowHead {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: var(--ink2);
+  box-shadow: inset -1px 0 0 var(--line2);
+}
+.compare tbody tr:hover .rowHead {
+  background-color: var(--ink2);
+  background-image: linear-gradient(rgba(47, 140, 255, .05), rgba(47, 140, 255, .05));
+}
+.grpLabel {
+  position: sticky;
+  left: 18px;
+  display: inline-block;
+}
+.compare tbody:last-child tr:last-child > * {
+  border-bottom: 0;
+}
+.yesIco {
+  display: inline-block;
+  vertical-align: -2px;
+  margin-right: 6px;
+}
+
+/* ---------- add-ons ---------- */
+.addOns {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.addOn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.addOnBody {
+  font-size: 15px;
+}
+.addOn > .addOnDetail {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line2);
+  color: var(--cyan2);
+}
+
+/* ---------- FAQ ---------- */
+/* Long [PLACEHOLDER] chips wrap instead of overflowing the accordion on phones. */
+.faq :global(.v-ph) {
+  white-space: normal;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 760px) {
+  .trustSec .trust,
+  .addOns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .compare .table {
+    min-width: 600px;
+  }
+  .compare .corner {
+    width: 9.5rem;
+  }
+  .grpLabel {
+    left: 14px;
+  }
+}
+@media (max-width: 560px) {
+  .compare .table {
+    min-width: 520px;
+  }
+  .compare .corner {
+    width: 8.5rem;
+  }
+  .compare .rowHead {
+    font-size: 13.5px;
+  }
+}
