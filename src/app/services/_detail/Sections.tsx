@@ -18,19 +18,21 @@ type Bg = { bg?: string };
  * Six numbered features, either as the ruled `.v-feature6` list or as a grid of lifted cards.
  * `id` is the hero's "What's included" jump target — unique per page, because Next keeps
  * recently visited pages mounted (hidden) and a shared id would resolve to the wrong page.
+ * `wide` sets the list in two wider columns — for an even count (e.g. 8) that would leave orphans at three across.
  */
 export function IncludedSection({
   id,
   copy,
   layout,
+  wide,
   bg,
-}: Bg & { id?: string; copy: BlockCopy<Point>; layout: "list" | "cards" }) {
+}: Bg & { id?: string; copy: BlockCopy<Point>; layout: "list" | "cards"; wide?: boolean }) {
   return (
     <section id={id} className={cx("v-sec", bg)}>
       <div className="v-wrap">
         <SectionHead eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead} />
         {layout === "list" ? (
-          <div className={cx("v-feature6", s.features)} data-stagger>
+          <div className={cx("v-feature6", s.features, wide && s.featuresWide)} data-stagger>
             {copy.items.map((item, i) => (
               <div key={item.title}>
                 <span className="v-num">{nn(i)}</span>

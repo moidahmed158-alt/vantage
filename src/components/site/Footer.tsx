@@ -10,6 +10,7 @@ const COLUMNS = [
       { label: "All services", href: ROUTES.services },
       { label: "Website Development", href: ROUTES.websiteDevelopment },
       { label: "Reputation Management", href: ROUTES.reputationManagement },
+      { label: "Video & Photography", href: ROUTES.videoPhotography },
       { label: "Healthcare SEO", href: ROUTES.healthcareSeo },
       { label: "Answer Engine Optimization", href: ROUTES.aeo },
     ],

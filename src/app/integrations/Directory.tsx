@@ -31,8 +31,12 @@ const STATUS_FILTERS: { key: StatusFilter; label: string }[] = [
   ...STATUS_KEYS.map((k) => ({ key: k, label: ST[k] })),
 ];
 
-/** Same matching as the design: name or category label contains the query. */
-const matches = (x: Integration, ql: string) => x.name.toLowerCase().includes(ql) || CAT[x.cat].toLowerCase().includes(ql);
+/** Name, former names (`aka`), category label or description contains the query — so "chiropractic" or "Allscripts" finds a match. */
+const matches = (x: Integration, ql: string) =>
+  [x.name, CAT[x.cat], x.desc, ...(x.aka ?? [])].some((text) => text.toLowerCase().includes(ql));
+
+/** Cards shown before "Show all" — a multiple of every column count the grid reaches (1–4). */
+const PAGE = 24;
 
 /** Wraps each case-insensitive occurrence of `needle` (already lower-cased) in a <mark>. */
 function highlight(text: string, needle: string): ReactNode {
@@ -66,6 +70,7 @@ export function Directory() {
   const [cat, setCat] = useState<CatFilter>("all");
   const [status, setStatus] = useState<StatusFilter>("all");
   const [selId, setSelId] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
   const prefill = useRequestPrefill();
 
   const uid = useId();
@@ -86,32 +91,48 @@ export function Directory() {
   const catCount = (k: CatFilter) => (k === "all" ? byQ.length : byQ.filter((x) => x.cat === k).length);
   const statusCount = (k: StatusFilter) => (k === "all" ? byQ.length : byQ.filter((x) => x.status === k).length);
   const filtered = !!ql || cat !== "all" || status !== "all";
-  const resultLabel = list.length === 1 ? "1 system" : `${list.length} systems`;
+  const visible = showAll ? list : list.slice(0, PAGE);
+  const hiddenCount = list.length - visible.length;
+  const resultLabel =
+    hiddenCount > 0 ? `${visible.length} of ${list.length} systems`
+    : list.length === 1 ? "1 system"
+    : `${list.length} systems`;
   // With no search text, the empty state names the active filter(s) instead of an empty “”.
   const missing =
     qTrim || [cat !== "all" ? CAT[cat] : "", status !== "all" ? ST[status] : ""].filter(Boolean).join(" · ");
 
   // ---- actions ----
+  // Every new search or filter starts from the first page of results.
   const onSearch = (value: string) => {
     setQ(value);
     setSelId(null);
+    setShowAll(false);
   };
   const pickCat = (k: CatFilter) => {
     setCat(k);
     setSelId(null);
+    setShowAll(false);
   };
   const pickStatus = (k: StatusFilter) => {
     setStatus(k);
     setSelId(null);
+    setShowAll(false);
   };
   const clearAll = (e: MouseEvent<HTMLButtonElement>) => {
     setQ("");
     setCat("all");
     setStatus("all");
     setSelId(null);
+    setShowAll(false);
     // The clear button unmounts; keyboard users continue from the search field.
     // (Skipped for pointer/touch so phones don't pop the on-screen keyboard.)
     if (e.detail === 0) searchRef.current?.focus();
+  };
+  // The button unmounts, so focus moves to the first card it revealed.
+  const revealAll = () => {
+    const firstNew = list[PAGE]?.id;
+    flushSync(() => setShowAll(true));
+    if (firstNew) cardRefs.current.get(firstNew)?.focus();
   };
   const toggle = (id: string) => {
     const next = selId === id ? null : id;
@@ -212,7 +233,7 @@ export function Directory() {
 
         {list.length > 0 ? (
           <ul className={styles.grid}>
-            {list.map((x) => {
+            {visible.map((x) => {
               const on = x.id === selId;
               const base = `${uid}-${x.id}`;
               return (
@@ -244,7 +265,7 @@ export function Directory() {
                         {highlight(CAT[x.cat], ql)}
                       </span>
                       <span id={`${base}-d`} className={styles.cardDesc}>
-                        {x.desc}
+                        {highlight(x.desc, ql)}
                       </span>
                       <span className={styles.cardMore}>
                         View details <Icon name="arrow" size={16} strokeWidth={2} />
@@ -305,7 +326,18 @@ export function Directory() {
               );
             })}
           </ul>
-        ) : (
+        ) : null}
+
+        {hiddenCount > 0 && (
+          <div className={styles.more}>
+            <button type="button" className="v-btn v-btn--ghost" onClick={revealAll}>
+              Show all {list.length} systems
+              <Icon name="caret" size={16} strokeWidth={2} />
+            </button>
+          </div>
+        )}
+
+        {list.length === 0 && (
           <div className={`v-fadein v-card v-card--dash ${styles.empty}`}>
             <span className="v-icon">
               <Icon name="search" size={22} strokeWidth={1.8} />

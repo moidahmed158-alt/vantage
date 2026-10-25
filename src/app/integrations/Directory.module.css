@@ -181,6 +181,9 @@
 }
 .grid .detailCta { align-self: flex-start; }
 
+/* ---------- show all ---------- */
+.more { display: flex; justify-content: center; margin-top: 28px; }
+
 /* ---------- empty state ---------- */
 .results .empty { padding: clamp(28px, 4vw, 56px); display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
 .emptyTitle { overflow-wrap: anywhere; }

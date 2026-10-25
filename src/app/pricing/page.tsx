@@ -62,10 +62,21 @@ type CompareRow = { feature: string; values: [string, string, string] };
 
 const COMPARE: { group: string; rows: CompareRow[] }[] = [
   {
+    group: "Reputation",
+    rows: [
+      { feature: "Automated review requests", values: [YES, YES, YES] },
+      { feature: "Monitoring & alerts", values: [YES, YES, YES] },
+      { feature: "Response drafting & approvals", values: [NO, YES, YES] },
+      { feature: "70+ online profile management", values: [NO, YES, "Every location"] },
+    ],
+  },
+  {
     group: "Website & foundation",
     rows: [
       { feature: "Custom website", values: [YES, "Conversion-focused", "Every location"] },
+      { feature: "HTML5 build", values: [NO, YES, YES] },
       { feature: "Google Business Profile optimization", values: ["1 location", "1 location", "Every location"] },
+      { feature: "Google Analytics (GA4)", values: [YES, YES, YES] },
       { feature: "Privacy-aware analytics & call tracking", values: [YES, YES, YES] },
     ],
   },
@@ -75,24 +86,27 @@ const COMPARE: { group: string; rows: CompareRow[] }[] = [
       { feature: "SEO keyword research", values: [YES, YES, YES] },
       { feature: "Local SEO", values: ["Core services", "Expanded", "Per location"] },
       { feature: "Treatment & specialty content", values: ["Starter set", "Ongoing", "Ongoing, per location"] },
+      { feature: "Blogs", values: [NO, YES, YES] },
+      { feature: "Medical schema markup (JSON-LD)", values: ["Core practice facts", YES, YES] },
       { feature: "AI search visibility (AEO)", values: [YES, YES, YES] },
       { feature: "AI visibility monitoring", values: [NO, YES, YES] },
     ],
   },
   {
-    group: "Reputation",
+    group: "Leads & messaging",
     rows: [
-      { feature: "Automated review requests", values: [YES, YES, YES] },
-      { feature: "Monitoring & alerts", values: [YES, YES, YES] },
-      { feature: "Response drafting & approvals", values: [NO, YES, YES] },
+      { feature: "Lead management", values: [NO, YES, YES] },
+      { feature: "Two-way texting", values: [NO, YES, YES] },
     ],
   },
   {
     group: "Connected",
     rows: [
       { feature: "Software integrations", values: [NO, "1 included", "Multiple + custom"] },
+      { feature: "Growth dashboard", values: [NO, YES, YES] },
       { feature: "Reporting", values: ["In patient terms", "With strategist reviews", "Consolidated"] },
       { feature: "Support", values: ["Shared team", "Named strategist", "Named team, priority"] },
+      { feature: "Live phone customer support", values: [NO, YES, YES] },
     ],
   },
 ];

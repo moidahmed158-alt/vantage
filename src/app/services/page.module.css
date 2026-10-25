@@ -124,6 +124,10 @@
   min-height: 280px;
 }
 .svcGrid .svcLink:focus-visible { border-radius: 18px; }
+/* Beside the sticky intro the grid is always two across, so an odd last card takes the full row instead of sitting alone. */
+@media (min-width: 1081px) {
+  .svcGrid > :last-child:nth-child(odd) { grid-column: 1 / -1; min-height: 0; }
+}
 .svcIcon { transition: border-color .3s, box-shadow .3s, transform .35s var(--ease); }
 
 .small { font-size: 15.5px; }

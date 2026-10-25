@@ -23,6 +23,7 @@
 /* ---------- what's included ---------- */
 .body16 { font-size: 16px; }
 
+.features.featuresWide { grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 0 48px; }
 .features > div { position: relative; }
 .features > div::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; pointer-events: none;

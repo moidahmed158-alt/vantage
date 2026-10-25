@@ -12,7 +12,7 @@ export default function WebsiteDevelopmentPage() {
   return (
     <>
       <ServiceHero copy={COPY.hero} glow="tr" visual={<BrowserMock />} />
-      <IncludedSection id={INCLUDED_ID} copy={COPY.included} layout="list" bg="v-alt" />
+      <IncludedSection id={INCLUDED_ID} copy={COPY.included} layout="list" wide bg="v-alt" />
       <WhySection copy={COPY.why} bg="v-glow-tl" />
       <ProcessSection copy={COPY.process} bg="v-alt" />
       <RelatedSection copy={COPY.related} />

@@ -22,7 +22,7 @@ export const COPY: ServiceCopy = {
         A website that earns trust — and <span className="v-grad">books the appointment</span>.
       </>
     ),
-    lead: "Your website is where a patient decides whether you're the right practice. We design and build fast, accessible, mobile-first sites that explain your care clearly, show the people behind it and make the next step obvious.",
+    lead: "Your website is where a patient decides whether you're the right practice. We custom-design fast, accessible, mobile-first sites around your brand that explain your care clearly, show the people behind it and make the next step obvious — and the site is 100% yours.",
     primary: { label: "Request a website review", href: ROUTES.contact },
     secondary: { label: "What's included", href: `#${INCLUDED_ID}` },
   },
@@ -32,20 +32,28 @@ export const COPY: ServiceCopy = {
     title: "Everything a practice website has to get right.",
     items: [
       {
+        title: "Custom design, built on your brand",
+        body: "No templates. The site is designed from your brand — your colors, your type and your own photos and video of real providers and real rooms, never stock imagery standing in for your practice.",
+      },
+      {
+        title: "100% website ownership",
+        body: "Your practice owns the website outright — design, content and domain. Nothing is leased, so if you ever move on, the site goes with you.",
+      },
+      {
+        title: "SEO on every page",
+        body: "Every page is built to rank: speed optimization, schema markup, clean headings and metadata, and a dedicated page for each service you offer — so each treatment can be found on its own.",
+      },
+      {
+        title: "ADA accessibility (WCAG 2.1 AA)",
+        body: "Designed and tested to WCAG 2.1 AA on desktop and mobile — contrast, keyboard and screen-reader access, readable type and meaningful alt text — with an accessibility review before launch.",
+      },
+      {
         title: "Patient-first structure",
         body: "Information architecture built around what patients look for: services, providers, insurance, locations and how to book.",
       },
       {
-        title: "Distinctive, credible design",
-        body: "A look that reflects your practice — real photography, provider credentials and a tone that fits your patients.",
-      },
-      {
         title: "Performance on mobile",
         body: "Optimized images, lean code and Core Web Vitals monitoring, because most patients will meet you on a phone.",
-      },
-      {
-        title: "Accessibility",
-        body: "Designed and tested toward WCAG 2.2 AA: contrast, keyboard access, readable type and meaningful alt text, with a review before launch.",
       },
       {
         title: "Conversion paths",
@@ -132,6 +140,14 @@ export const COPY: ServiceCopy = {
       {
         q: "Will a redesign hurt our current rankings?",
         a: "Not if the migration is planned properly. We map existing URLs, preserve what ranks, set redirects and monitor search performance through launch.",
+      },
+      {
+        q: "Who owns the website?",
+        a: "You do — 100%. Your practice owns the design, content and domain, and if you ever move on, the website goes with you.",
+      },
+      {
+        q: "Will the site meet ADA accessibility standards?",
+        a: "We build and test to WCAG 2.1 AA — the technical standard most often used to measure ADA website accessibility — on desktop and mobile. Accessibility also depends on content added after launch, so your team gets simple guidance for keeping new pages accessible.",
       },
       {
         q: "Which platform do you build on?",

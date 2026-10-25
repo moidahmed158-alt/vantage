@@ -10,7 +10,7 @@ import styles from "./page.module.css";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Healthcare SEO, Answer Engine Optimization, website development, reputation management and integrations — planned and run as one growth system.",
+    "Healthcare SEO, Answer Engine Optimization, website development, reputation management, video & photography and integrations — planned and run as one growth system.",
 };
 
 /* =====================================================================
@@ -30,7 +30,7 @@ const HERO = {
 /** Hero diagram, top (narrowest) to foundation (full width). */
 const HERO_LAYERS = [
   { title: "Be found", num: "01", chips: ["Healthcare SEO", "AEO"] },
-  { title: "Be chosen", num: "02", chips: ["Website development", "Reputation management"] },
+  { title: "Be chosen", num: "02", chips: ["Website development", "Reputation management", "Video & photography"] },
   { title: "Be connected", num: "03", chips: ["Healthcare integrations", "Strategy & reporting"] },
 ];
 
@@ -89,6 +89,13 @@ const LAYERS: Layer[] = [
         body: "A steady flow of genuine reviews, monitoring across sites and thoughtful, privacy-safe responses.",
         cta: "Explore reputation",
         href: ROUTES.reputationManagement,
+      },
+      {
+        icon: "video",
+        title: "Video & Photography",
+        body: "On-site shoots that show patients real providers and real rooms — edited for your website, ads, reels and profiles.",
+        cta: "Explore video",
+        href: ROUTES.videoPhotography,
       },
     ],
   },
@@ -208,7 +215,7 @@ export default function ServicesPage() {
           <div className={`v-stack ${styles.heroCopy}`}>
             <p className="v-eyebrow v-rise">{HERO.eyebrow}</p>
             <h1 className="v-display v-h1--page v-rise v-d1">
-              Six disciplines. <span className="v-grad">One growth system.</span>
+              Seven disciplines. <span className="v-grad">One growth system.</span>
             </h1>
             <p className="v-lead v-rise v-d2">{HERO.lead}</p>
             <div className="v-btn-row v-rise v-d3">

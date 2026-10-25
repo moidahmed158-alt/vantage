@@ -33,6 +33,7 @@ export const ROUTES = {
   reputationManagement: "/services/reputation-management",
   healthcareSeo: "/services/healthcare-seo",
   aeo: "/services/answer-engine-optimization",
+  videoPhotography: "/services/video-photography",
 } as const;
 
 export type NavLink = { label: string; href: string; desc?: string };
@@ -52,6 +53,7 @@ export const SERVICE_GROUPS: { tag: string; title: string; links: NavLink[] }[] 
     links: [
       { label: "Website Development", href: ROUTES.websiteDevelopment, desc: "Fast, accessible sites built to book" },
       { label: "Reputation Management", href: ROUTES.reputationManagement, desc: "Reviews, monitoring and response" },
+      { label: "Video & Photography", href: ROUTES.videoPhotography, desc: "On-site shoots for your site, ads and profiles" },
     ],
   },
   {

@@ -64,6 +64,7 @@ const LAYERS: { n: string; title: string; icon: IconName; body: string; links: {
     links: [
       { label: "Website Development", href: ROUTES.websiteDevelopment },
       { label: "Reputation Management", href: ROUTES.reputationManagement },
+      { label: "Video & Photography", href: ROUTES.videoPhotography },
     ],
   },
   {
