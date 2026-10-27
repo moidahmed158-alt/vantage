@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 /* ---------------------------------------------------------------- content */
 
-const TRUST = ["Healthcare-only focus", "Reported in patient terms", "Privacy-aware by design"];
+const TRUST = ["Healthcare-only focus", "100% website ownership", "Visible in AI search"];
 
 const BLIPS: { label: string; icon: IconName; x: number; y: number; filled?: boolean }[] = [
   { label: "Search", icon: "search", x: 16, y: 22 },

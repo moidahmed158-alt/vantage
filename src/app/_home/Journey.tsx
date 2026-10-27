@@ -79,7 +79,7 @@ function SearchMock() {
     <div className={`v-mock v-fadein ${s.mockCol}`}>
       <div className="v-searchbar">
         <Icon name="search" size={16} strokeWidth={2.2} />
-        pediatric dentist near me open saturday
+        orthopedic surgeon near me open saturday
       </div>
       <div className={`v-card v-card--static ${s.mockCard}`}>
         <div className={`v-tag ${s.aiTag}`}>
@@ -87,18 +87,18 @@ function SearchMock() {
           AI answer
         </div>
         <p style={{ color: "var(--fg2)" }}>
-          Several nearby practices offer Saturday appointments for children. <strong style={{ color: "#fff" }}>Your Practice</strong> lists
-          Saturday hours, is accepting new patients, and is often described in reviews as gentle with anxious kids.
+          Several nearby practices offer Saturday orthopedic appointments. <strong style={{ color: "#fff" }}>Your Practice</strong> lists
+          Saturday hours, is accepting new patients, and is often described in reviews as clear about treatment options.
         </p>
         <div className={s.chipRow}>
-          <span className="v-chip v-chip--sm">yourpractice.com/pediatric</span>
+          <span className="v-chip v-chip--sm">yourpractice.com/orthopedics</span>
           <span className="v-chip v-chip--sm">Business profile</span>
           <span className="v-chip v-chip--sm">Patient reviews</span>
         </div>
       </div>
       <div className={`v-card v-card--static ${s.resultRow}`}>
         <div>
-          <strong style={{ fontSize: 15.5 }}>Your Practice — Pediatric Dentistry</strong>
+          <strong style={{ fontSize: 15.5 }}>Your Practice — Orthopedic Surgery</strong>
           <div className="v-muted" style={{ fontSize: 13.5 }}>
             Open Saturday · New patients welcome
           </div>

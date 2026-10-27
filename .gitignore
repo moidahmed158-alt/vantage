@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# output of tools/seo-migration if run from here (belongs in each practice site's repo)
+/migration/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

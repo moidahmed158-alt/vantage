@@ -48,6 +48,9 @@ src/
     site/                Header (mega menus + mobile drawer), Footer, Effects (scroll reveal, card spotlight)
     ui/                  Icon, Mark/Logo, Btn/RowLink, Accordion, Counter, Radar, Flag/Ph, SectionHead/Crumbs/CtaBand
   lib/site.ts            site-wide constants
+tools/
+  seo-migration/         crawl → redirect map → verify scripts for moving client practice sites off Tebra/PatientPop
+                         (not part of this site's build; see its README)
 ```
 
 ### Design system notes

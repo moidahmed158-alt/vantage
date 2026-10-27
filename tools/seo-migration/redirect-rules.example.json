@@ -1,0 +1,11 @@
+{
+  "rules": [
+    { "from": "/contents/services/:slug", "to": "/services/:slug" },
+    { "from": "/contents/blog/:slug", "to": "/blog/:slug" }
+  ],
+  "manual": {
+    "/contents/services/sedation-dentistry/": "/services/sedation",
+    "/contents/learn-more/specials/": "/new-patient-offers"
+  },
+  "remove": ["/contents/thank-you/"]
+}

@@ -28,23 +28,25 @@ export const AI_PLATFORMS = ["ChatGPT", "Gemini", "Perplexity", "Copilot", "Clau
 
 /** Included in every plan. */
 const GOOGLE_ANALYTICS: PlanItem = { text: "Google Analytics (GA4)", note: "Set up so health information isn't collected" };
+const WEBSITE_OWNERSHIP: PlanItem = { text: "100% website ownership", note: "Design, content & domain — yours to keep" };
 
 export const PLANS: Plan[] = [
   {
-    id: "basic",
-    tier: "Basic",
+    id: "essential",
+    tier: "Essential",
     tagline: "Single location. Core channels.",
     headline: "Best for new and growing practices.",
     note: "Shaped around your specialty and local market. We size the plan to fit.",
     groups: [
       {
         title: "Reputation",
-        items: [{ text: "Automated review requests & monitoring" }],
+        items: [{ text: "Review monitoring & alerts" }],
       },
       {
         title: "Website & foundation",
         items: [
           { text: "Custom website", note: "Hosting · speed monitoring · accessibility checks" },
+          WEBSITE_OWNERSHIP,
           { text: "Google Business Profile optimization" },
         ],
       },
@@ -61,7 +63,7 @@ export const PLANS: Plan[] = [
       title: "Growth layer",
       items: [GOOGLE_ANALYTICS, { text: "Privacy-aware analytics & call tracking" }, { text: "Reporting in patient terms" }],
     },
-    cta: { label: "Start with Basic", href: ROUTES.contact },
+    cta: { label: "Start with Essential", href: ROUTES.contact },
   },
   {
     id: "growth",
@@ -75,7 +77,7 @@ export const PLANS: Plan[] = [
         title: "Reputation",
         items: [
           { text: "Automated review requests & monitoring" },
-          { text: "Review response drafting & approvals" },
+          { text: "EHR/EMR integrations", note: "Review requests triggered by completed visits" },
           { text: "70+ online profile management", note: "Listings kept accurate across directories & maps" },
         ],
       },
@@ -83,6 +85,7 @@ export const PLANS: Plan[] = [
         title: "Website & foundation",
         items: [
           { text: "Custom website", note: "Conversion-focused patient paths · mobile-first booking" },
+          WEBSITE_OWNERSHIP,
           { text: "HTML5 build" },
           { text: "Google Business Profile optimization" },
         ],
@@ -118,10 +121,10 @@ export const PLANS: Plan[] = [
     cta: { label: "Book a strategy call", href: ROUTES.contact },
   },
   {
-    id: "advanced",
-    tier: "Advanced",
+    id: "elite",
+    tier: "Elite",
     tagline: "Two or more locations. Every location.",
-    headline: "Built for multi-location groups and MSOs.",
+    headline: "Built for multi-location groups.",
     note: "Group structure and custom integrations factored in.",
     groups: [
       {

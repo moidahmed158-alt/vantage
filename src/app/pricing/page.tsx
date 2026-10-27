@@ -10,7 +10,7 @@ import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "Vantage plans for medical and dental practices — Basic, Growth and Advanced — with clear inclusions and add-ons.",
+  description: "Vantage plans for medical and dental practices — Essential, Growth and Elite — with clear inclusions and add-ons.",
 };
 
 /* =====================================================================
@@ -53,9 +53,9 @@ const YES = "Included";
 const NO = "—";
 
 const COMPARE_COLUMNS: { name: string; note: string; popular?: boolean }[] = [
-  { name: "Basic", note: "Single location" },
+  { name: "Essential", note: "Single location" },
   { name: "Growth", note: "Most popular", popular: true },
-  { name: "Advanced", note: "Multi-location" },
+  { name: "Elite", note: "Multi-location" },
 ];
 
 type CompareRow = { feature: string; values: [string, string, string] };
@@ -64,9 +64,9 @@ const COMPARE: { group: string; rows: CompareRow[] }[] = [
   {
     group: "Reputation",
     rows: [
-      { feature: "Automated review requests", values: [YES, YES, YES] },
+      { feature: "Automated review requests", values: [NO, YES, YES] },
       { feature: "Monitoring & alerts", values: [YES, YES, YES] },
-      { feature: "Response drafting & approvals", values: [NO, YES, YES] },
+      { feature: "EHR/EMR integrations", values: [NO, YES, YES] },
       { feature: "70+ online profile management", values: [NO, YES, "Every location"] },
     ],
   },
@@ -74,6 +74,7 @@ const COMPARE: { group: string; rows: CompareRow[] }[] = [
     group: "Website & foundation",
     rows: [
       { feature: "Custom website", values: [YES, "Conversion-focused", "Every location"] },
+      { feature: "100% website ownership", values: [YES, YES, YES] },
       { feature: "HTML5 build", values: [NO, YES, YES] },
       { feature: "Google Business Profile optimization", values: ["1 location", "1 location", "Every location"] },
       { feature: "Google Analytics (GA4)", values: [YES, YES, YES] },
@@ -232,7 +233,7 @@ export default function PricingPage() {
             data-reveal="1"
           >
             <table className={`v-table ${styles.table}`}>
-              <caption className="v-sr">Comparison of Basic, Growth and Advanced plans</caption>
+              <caption className="v-sr">Comparison of Essential, Growth and Elite plans</caption>
               <thead>
                 <tr>
                   <th scope="col" className={styles.corner}>
