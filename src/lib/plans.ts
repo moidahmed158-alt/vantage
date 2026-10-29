@@ -19,16 +19,18 @@ export type Plan = {
   note: string;
   popular?: boolean;
   groups: PlanGroup[];
-  /** The glowing box at the foot of the feature list. */
-  highlight: PlanGroup;
+  /** Optional glowing box at the foot of the feature list. */
+  highlight?: PlanGroup;
   cta: { label: string; href: string };
 };
 
 export const AI_PLATFORMS = ["ChatGPT", "Gemini", "Perplexity", "Copilot", "Claude"];
 
 /** Included in every plan. */
-const GOOGLE_ANALYTICS: PlanItem = { text: "Google Analytics (GA4)", note: "Set up so health information isn't collected" };
+const GOOGLE_ANALYTICS: PlanItem = { text: "Google Analytics (GA4)" };
+const LIVE_SUPPORT: PlanItem = { text: "24-hour live phone support" };
 const WEBSITE_OWNERSHIP: PlanItem = { text: "100% website ownership", note: "Design, content & domain — yours to keep" };
+const OFFSITE_SEO: PlanItem = { text: "Off-site SEO (backlinks)" };
 
 export const PLANS: Plan[] = [
   {
@@ -58,11 +60,11 @@ export const PLANS: Plan[] = [
           { text: "AI search visibility", note: "Structured data & consistent practice facts", chips: AI_PLATFORMS },
         ],
       },
+      {
+        title: "Analytics & support",
+        items: [GOOGLE_ANALYTICS, LIVE_SUPPORT],
+      },
     ],
-    highlight: {
-      title: "Growth layer",
-      items: [GOOGLE_ANALYTICS, { text: "Privacy-aware analytics & call tracking" }, { text: "Reporting in patient terms" }],
-    },
     cta: { label: "Start with Essential", href: ROUTES.contact },
   },
   {
@@ -93,8 +95,6 @@ export const PLANS: Plan[] = [
       {
         title: "SEO coverage",
         items: [
-          { text: "SEO keyword research" },
-          { text: "Expanded SEO & ongoing treatment-page content" },
           { text: "Blogs" },
           { text: "Medical schema markup" },
           { text: "JSON-LD structured data" },
@@ -109,13 +109,14 @@ export const PLANS: Plan[] = [
     highlight: {
       title: "Growth layer",
       items: [
+        { text: "Advanced SEO" },
+        OFFSITE_SEO,
+        { text: "AI voice SEO" },
         { text: "Growth dashboard" },
-        { text: "One scheduling or PM integration", note: "Connected after an integration assessment" },
+        { text: "SEO keyword research" },
+        { text: "Expanded SEO & ongoing treatment-page content" },
         GOOGLE_ANALYTICS,
-        { text: "Privacy-aware analytics & call tracking" },
-        { text: "Reporting in patient terms" },
-        { text: "Named strategist & roadmap reviews" },
-        { text: "Live phone customer support" },
+        LIVE_SUPPORT,
       ],
     },
     cta: { label: "Book a strategy call", href: ROUTES.contact },
@@ -134,17 +135,23 @@ export const PLANS: Plan[] = [
             text: "Everything in Growth, for every location",
             note: "Reputation · website · SEO · AI visibility — scaled per location",
           },
+          OFFSITE_SEO,
         ],
       },
       {
         title: "Multi-location",
         items: [{ text: "Location pages & profiles for every office" }, { text: "Consolidated multi-location reporting" }],
       },
+      {
+        title: "Analytics & support",
+        items: [
+          GOOGLE_ANALYTICS,
+          { text: "Multiple & custom integrations" },
+          { text: "Named team & priority support" },
+          LIVE_SUPPORT,
+        ],
+      },
     ],
-    highlight: {
-      title: "Growth layer",
-      items: [GOOGLE_ANALYTICS, { text: "Multiple & custom integrations" }, { text: "Named team & priority support" }],
-    },
     cta: { label: "Talk to us about your group", href: ROUTES.contact },
   },
 ];

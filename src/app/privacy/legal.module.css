@@ -51,6 +51,7 @@
 .notice { margin-bottom: 32px; }
 .title { margin-top: 20px; }
 .meta { margin-top: 16px; }
+.intro { margin-top: 28px; }
 .h2Num {
   font-family: var(--mono); font-weight: 500; font-size: .66em; letter-spacing: .04em; color: var(--cyan);
   text-shadow: 0 0 14px rgba(92, 200, 255, .45); vertical-align: .16em;

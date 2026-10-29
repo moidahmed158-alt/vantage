@@ -56,6 +56,7 @@ export function LegalLayout({
   title,
   meta,
   notice,
+  intro,
   sections,
 }: {
   current: LegalKey;
@@ -65,6 +66,8 @@ export function LegalLayout({
   meta: ReactNode;
   /** "Draft for legal review" note; shown only while SHOW_CONTENT_FLAGS is on. */
   notice?: ReactNode;
+  /** Unnumbered preamble shown above the contents. */
+  intro?: ReactNode;
   sections: LegalSection[];
 }) {
   const toc = toTocItems(sections);
@@ -104,6 +107,7 @@ export function LegalLayout({
           <p className="v-eyebrow v-rise v-d1">{eyebrow}</p>
           <h1 className={`v-display v-h1--page v-rise v-d2 ${s.title}`}>{title}</h1>
           <p className={`v-hint v-rise v-d3 ${s.meta}`}>{meta}</p>
+          {intro && <div className={s.intro}>{intro}</div>}
 
           <TocCompact items={toc} label={TOC_LABEL} />
 

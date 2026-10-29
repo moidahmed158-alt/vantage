@@ -65,13 +65,15 @@ export function PlanCards({ idPrefix, headingLevel = 3 }: { idPrefix: string; he
                   <ItemList items={group.items} />
                 </div>
               ))}
-              <div className={s.highlight}>
-                <p className={s.hlTitle}>
-                  <span className="v-live" />
-                  {plan.highlight.title}
-                </p>
-                <ItemList items={plan.highlight.items} />
-              </div>
+              {plan.highlight && (
+                <div className={s.highlight}>
+                  <p className={s.hlTitle}>
+                    <span className="v-live" />
+                    {plan.highlight.title}
+                  </p>
+                  <ItemList items={plan.highlight.items} />
+                </div>
+              )}
             </div>
 
             <Btn href={plan.cta.href} variant={plan.popular ? "primary" : "ghost"} arrow className={s.cta}>

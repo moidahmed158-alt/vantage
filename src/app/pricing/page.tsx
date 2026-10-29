@@ -78,7 +78,6 @@ const COMPARE: { group: string; rows: CompareRow[] }[] = [
       { feature: "HTML5 build", values: [NO, YES, YES] },
       { feature: "Google Business Profile optimization", values: ["1 location", "1 location", "Every location"] },
       { feature: "Google Analytics (GA4)", values: [YES, YES, YES] },
-      { feature: "Privacy-aware analytics & call tracking", values: [YES, YES, YES] },
     ],
   },
   {
@@ -87,6 +86,9 @@ const COMPARE: { group: string; rows: CompareRow[] }[] = [
       { feature: "SEO keyword research", values: [YES, YES, YES] },
       { feature: "Local SEO", values: ["Core services", "Expanded", "Per location"] },
       { feature: "Treatment & specialty content", values: ["Starter set", "Ongoing", "Ongoing, per location"] },
+      { feature: "Advanced SEO", values: [NO, YES, YES] },
+      { feature: "Off-site SEO (backlinks)", values: [NO, YES, YES] },
+      { feature: "AI voice SEO", values: [NO, YES, YES] },
       { feature: "Blogs", values: [NO, YES, YES] },
       { feature: "Medical schema markup (JSON-LD)", values: ["Core practice facts", YES, YES] },
       { feature: "AI search visibility (AEO)", values: [YES, YES, YES] },
@@ -103,11 +105,11 @@ const COMPARE: { group: string; rows: CompareRow[] }[] = [
   {
     group: "Connected",
     rows: [
-      { feature: "Software integrations", values: [NO, "1 included", "Multiple + custom"] },
+      { feature: "Software integrations", values: [NO, "EHR/EMR for reviews", "Multiple + custom"] },
       { feature: "Growth dashboard", values: [NO, YES, YES] },
-      { feature: "Reporting", values: ["In patient terms", "With strategist reviews", "Consolidated"] },
-      { feature: "Support", values: ["Shared team", "Named strategist", "Named team, priority"] },
-      { feature: "Live phone customer support", values: [NO, YES, YES] },
+      { feature: "Reporting", values: [NO, "Growth dashboard", "Consolidated, multi-location"] },
+      { feature: "Support", values: ["Shared team", "Shared team", "Named team, priority"] },
+      { feature: "24-hour live phone support", values: [YES, YES, YES] },
     ],
   },
 ];

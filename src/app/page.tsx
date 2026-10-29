@@ -96,7 +96,7 @@ const STEPS = [
   { title: "Strategy call", body: "A focused conversation about your practice, goals and local market. No generic pitch deck.", out: "an initial read on your biggest opportunities." },
   { title: "Growth assessment", body: "We review visibility across search, maps, AI answers and reviews — and map the software you use.", out: "prioritized findings, in plain language." },
   { title: "Roadmap & build", body: "Work is sequenced by impact. Fixes that affect appointments come first; everything else earns its place.", out: "a roadmap with owners and milestones." },
-  { title: "Measure & refine", body: "Reporting in patient terms — inquiries, calls and booked appointments, wherever your systems make that measurable.", out: "regular reviews and clear next priorities." },
+  { title: "Measure & refine", body: "Reporting on inquiries, calls and booked appointments, wherever your systems make that measurable.", out: "regular reviews and clear next priorities." },
 ];
 
 const RESULTS = [
