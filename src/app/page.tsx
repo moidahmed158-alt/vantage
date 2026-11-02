@@ -295,7 +295,6 @@ export default function HomePage() {
         <div className="v-wrap">
           <div className={s.proofHead} data-reveal>
             <p className="v-eyebrow">By the numbers</p>
-            <Flag>Figures carried over from current site — verify before publishing</Flag>
           </div>
           <div className={s.stats} data-stagger>
             {STATS.map((st) => (
