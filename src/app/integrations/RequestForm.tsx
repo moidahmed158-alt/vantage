@@ -2,7 +2,6 @@
 
 import { useId, useRef, type FormEvent } from "react";
 import { flushSync } from "react-dom";
-import { Ph } from "@/components/ui/Flag";
 import { Icon } from "@/components/ui/Icon";
 import { SITE } from "@/lib/site";
 import { FIELD_ERRORS, REQUEST_CATEGORIES, validateRequest, type RequiredField } from "./data";
@@ -81,8 +80,7 @@ export function RequestForm() {
             <div className="v-notice v-notice--warn v-fadein">
               <Icon name="info" size={20} strokeWidth={2} />
               <span>
-                <strong>Request ready — not sent.</strong> This form isn&apos;t connected to a submission service yet{" "}
-                <Ph>[FORM ENDPOINT]</Ph>. Until it is, please email{" "}
+                <strong>Request ready — not sent.</strong> This form isn&apos;t connected to a submission service yet. Until it is, please email{" "}
                 <a className="v-link" href={MAILTO}>
                   {SITE.email}
                 </a>

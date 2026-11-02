@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Ph } from "@/components/ui/Flag";
 import { SITE } from "@/lib/site";
 import { ContactForm } from "./ContactForm";
 import s from "./page.module.css";
@@ -24,7 +23,7 @@ const NEXT_STEPS: { title: string; body: ReactNode }[] = [
     title: "Strategy call",
     body: (
       <>
-        A <Ph>[DURATION]</Ph> conversation with a strategist about your goals and the biggest opportunities we found.
+        A conversation with a strategist about your goals and the biggest opportunities we found.
       </>
     ),
   },
@@ -71,9 +70,6 @@ export default function ContactPage() {
               <a className={`v-alink ${s.email}`} href={`mailto:${SITE.email}`}>
                 {SITE.email}
               </a>
-              <p className="v-small v-muted">
-                Book a time directly: <Ph>[SCHEDULING LINK]</Ph> · Phone: <Ph>[PHONE]</Ph>
-              </p>
             </div>
           </div>
 

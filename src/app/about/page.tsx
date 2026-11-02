@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Flag, Ph } from "@/components/ui/Flag";
 import { Mark } from "@/components/ui/Mark";
 import { Radar } from "@/components/ui/Radar";
 import { CtaBand, SectionHead } from "@/components/ui/Section";
@@ -60,7 +59,10 @@ const AUDIENCES: { title: string; body: string }[] = [
   },
 ];
 
-/** Values wrapped in [BRACKETS] render as amber placeholder chips; replace them with verified details. */
+/**
+ * Members whose name is still a [BRACKETED] placeholder are not shown; the whole team section
+ * stays hidden until at least one member has verified details.
+ */
 const TEAM: { name: string; role: string; bio: string }[] = [
   { name: "[NAME]", role: "[ROLE]", bio: "[VERIFIED BIO — experience, credentials]" },
   { name: "[NAME]", role: "[ROLE]", bio: "[VERIFIED BIO — experience, credentials]" },
@@ -69,7 +71,7 @@ const TEAM: { name: string; role: string; bio: string }[] = [
 
 /* ===================================================================== */
 
-const copy = (text: string) => (/^\[.*\]$/.test(text) ? <Ph>{text}</Ph> : text);
+const SHOWN_TEAM = TEAM.filter((member) => !/^\[.*\]$/.test(member.name));
 
 export default function AboutPage() {
   return (
@@ -163,34 +165,31 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* TEAM */}
-      <section className="v-sec">
-        <div className="v-wrap">
-          <SectionHead
-            eyebrow="The team"
-            title="The people behind the work."
-            row
-            aside={<Flag>Add verified names, roles, bios &amp; photos</Flag>}
-          />
-          <div className={styles.team} data-stagger>
-            {TEAM.map((member, i) => (
-              <figure key={i} className={`v-card v-lift ${styles.member}`}>
-                <div className={styles.photo}>
-                  <span className="v-tag">Team photo</span>
-                </div>
-                <figcaption className={styles.caption}>
-                  <strong className={styles.name}>{copy(member.name)}</strong>
-                  <span className="v-muted">{copy(member.role)}</span>
-                  <p className={`v-p ${styles.bio}`}>{copy(member.bio)}</p>
-                </figcaption>
-              </figure>
-            ))}
+      {/* TEAM — hidden until verified team details are added above */}
+      {SHOWN_TEAM.length > 0 && (
+        <section className="v-sec">
+          <div className="v-wrap">
+            <SectionHead eyebrow="The team" title="The people behind the work." />
+            <div className={styles.team} data-stagger>
+              {SHOWN_TEAM.map((member) => (
+                <figure key={member.name} className={`v-card v-lift ${styles.member}`}>
+                  <div className={styles.photo}>
+                    <span className="v-tag">Team photo</span>
+                  </div>
+                  <figcaption className={styles.caption}>
+                    <strong className={styles.name}>{member.name}</strong>
+                    <span className="v-muted">{member.role}</span>
+                    <p className={`v-p ${styles.bio}`}>{member.bio}</p>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <CtaBand
-        alt
+        alt={SHOWN_TEAM.length > 0}
         title={
           <>
             If that sounds like the partner you&apos;ve been looking for, <span className="v-neon">let&apos;s talk</span>.

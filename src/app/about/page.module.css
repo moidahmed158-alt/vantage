@@ -94,7 +94,9 @@
 .whoRow {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 46ch);
+  /* The title column keeps room for its longest word ("Independent", "Healthcare");
+     the description narrows instead, so the two never overlap. */
+  grid-template-columns: minmax(10.5rem, 1fr) minmax(0, 46ch);
   gap: 8px 32px;
   align-items: baseline;
   padding: 26px 0;

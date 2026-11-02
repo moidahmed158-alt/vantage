@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Ph } from "@/components/ui/Flag";
 import { ROUTES } from "@/lib/site";
 import type { ServiceCopy } from "../_detail/types";
 
@@ -208,7 +207,7 @@ export const MOCK: {
     text: (
       <>
         Thank you for this feedback. Long waits aren&apos;t the experience we want for anyone. We&apos;d value the chance to
-        talk — please call our office manager at <Ph>[NUMBER]</Ph>.
+        talk — please call the office and ask for our practice manager.
       </>
     ),
     checks: ["Doesn't confirm they're a patient", "No visit or treatment details", "Moves the conversation offline"],

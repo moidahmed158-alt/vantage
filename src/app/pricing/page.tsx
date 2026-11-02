@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { PlanCards } from "@/components/site/PlanCards";
 import { Accordion, type AccordionItem } from "@/components/ui/Accordion";
-import { Flag, Ph } from "@/components/ui/Flag";
+import { Flag } from "@/components/ui/Flag";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { CtaBand, SectionHead } from "@/components/ui/Section";
 import { ROUTES } from "@/lib/site";
@@ -24,7 +24,7 @@ const TRUST: { icon: IconName; title: string; body: ReactNode }[] = [
     title: "Your accounts stay yours",
     body: (
       <>
-        Analytics and listing accounts held in your practice&apos;s name. <Ph>[CONFIRM]</Ph>
+        Analytics and listing accounts held in your practice&apos;s name.
       </>
     ),
   },
@@ -33,7 +33,7 @@ const TRUST: { icon: IconName; title: string; body: ReactNode }[] = [
     title: "Straightforward terms",
     body: (
       <>
-        Engagement term <Ph>[TERM]</Ph> · notice period <Ph>[NOTICE]</Ph>.
+        Engagement terms and notice period agreed in writing before you start.
       </>
     ),
   },
@@ -42,7 +42,7 @@ const TRUST: { icon: IconName; title: string; body: ReactNode }[] = [
     title: "Fast, planned launch",
     body: (
       <>
-        Typical kickoff to launch: <Ph>[TIMELINE]</Ph>, with a dated plan.
+        A dated plan from kickoff to launch, shared before work begins.
       </>
     ),
   },
@@ -138,8 +138,7 @@ const FAQS: AccordionItem[] = [
     q: "Can we change plans later?",
     a: (
       <>
-        Yes — most practices start with one plan and move up as they add services or locations.{" "}
-        <Ph>[CONFIRM UPGRADE / DOWNGRADE POLICY]</Ph>
+        Yes — most practices start with one plan and move up as they add services or locations.
       </>
     ),
   },

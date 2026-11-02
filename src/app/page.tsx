@@ -4,7 +4,7 @@ import { PlanCards } from "@/components/site/PlanCards";
 import { Accordion } from "@/components/ui/Accordion";
 import { Btn, RowLink } from "@/components/ui/Button";
 import { Counter } from "@/components/ui/Counter";
-import { Flag, Ph } from "@/components/ui/Flag";
+import { Flag } from "@/components/ui/Flag";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Mark } from "@/components/ui/Mark";
 import { Radar } from "@/components/ui/Radar";
@@ -106,9 +106,9 @@ const RESULTS = [
 
 // Plan cards themselves live in src/lib/plans.ts (shared with /pricing).
 const PLAN_TRUST: { title: string; body: ReactNode }[] = [
-  { title: "Your accounts stay yours", body: <>Analytics and listing accounts in your practice&apos;s name. <Ph>[CONFIRM]</Ph></> },
-  { title: "Straightforward terms", body: <>Term <Ph>[TERM]</Ph> · notice <Ph>[NOTICE]</Ph>.</> },
-  { title: "Planned launch", body: <>Kickoff to launch in <Ph>[TIMELINE]</Ph>.</> },
+  { title: "Your accounts stay yours", body: <>Analytics and listing accounts in your practice&apos;s name.</> },
+  { title: "Straightforward terms", body: <>Clear engagement terms, agreed in writing before you start.</> },
+  { title: "Planned launch", body: <>A dated plan from kickoff to launch.</> },
 ];
 
 const HOME_SPECIALTIES: { group: string; items: { label: string; slug: string }[] }[] = [

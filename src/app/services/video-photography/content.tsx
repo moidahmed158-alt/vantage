@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Ph } from "@/components/ui/Flag";
 import { ROUTES } from "@/lib/site";
 import type { BlockCopy, Point, ServiceCopy } from "../_detail/types";
 
@@ -118,8 +117,7 @@ export const COPY: Pick<ServiceCopy, "meta" | "hero" | "why" | "related" | "faq"
         a: (
           <>
             Typically a mix of provider interviews, treatment explainers, practice footage and photography, edited into
-            finished videos and cut-downs for each platform. The exact list is agreed in the plan.{" "}
-            <Ph>[CONFIRM STANDARD DELIVERABLES]</Ph>
+            finished videos and cut-downs for each platform. The exact list is agreed in the plan.
           </>
         ),
       },
@@ -128,7 +126,7 @@ export const COPY: Pick<ServiceCopy, "meta" | "hero" | "why" | "related" | "faq"
         a: (
           <>
             It depends on how many providers and treatments we cover. You&apos;ll get a schedule in advance so you can
-            block the right time. <Ph>[TYPICAL SHOOT LENGTH]</Ph>
+            block the right time.
           </>
         ),
       },
@@ -144,7 +142,7 @@ export const COPY: Pick<ServiceCopy, "meta" | "hero" | "why" | "related" | "faq"
         q: "How soon do we see edits, and can we ask for changes?",
         a: (
           <>
-            You review first cuts and send notes before anything is published. <Ph>[TURNAROUND &amp; REVISION ROUNDS]</Ph>
+            You review first cuts and send notes before anything is published.
           </>
         ),
       },
@@ -164,7 +162,7 @@ export const COPY: Pick<ServiceCopy, "meta" | "hero" | "why" | "related" | "faq"
         q: "Who owns the footage?",
         a: (
           <>
-            Your practice owns the finished videos and photos. <Ph>[CONFIRM RAW FOOTAGE &amp; USAGE RIGHTS]</Ph>
+            Your practice owns the finished videos and photos.
           </>
         ),
       },

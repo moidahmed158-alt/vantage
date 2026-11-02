@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Ph } from "@/components/ui/Flag";
 import { ROUTES } from "@/lib/site";
 import type { ServiceCopy } from "../_detail/types";
 
@@ -152,8 +151,7 @@ export const COPY: ServiceCopy = {
         q: "Which AI tools do you monitor?",
         a: (
           <>
-            The major general-purpose assistants and AI features in search, agreed at the start of each engagement.{" "}
-            <Ph>[CONFIRM MONITORED PLATFORMS]</Ph>
+            The major general-purpose assistants and AI features in search, agreed at the start of each engagement.
           </>
         ),
       },

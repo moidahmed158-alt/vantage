@@ -1,4 +1,3 @@
-import { Ph } from "@/components/ui/Flag";
 import { ROUTES } from "@/lib/site";
 import type { ServiceCopy } from "../_detail/types";
 
@@ -154,7 +153,7 @@ export const COPY: ServiceCopy = {
         a: (
           <>
             We recommend a platform after discovery, based on how your team will edit content, what you need to integrate and
-            long-term cost. <Ph>[CONFIRM SUPPORTED PLATFORMS]</Ph>
+            long-term cost.
           </>
         ),
       },
@@ -166,8 +165,7 @@ export const COPY: ServiceCopy = {
         q: "How long does a new site take?",
         a: (
           <>
-            It depends on page count, content readiness and integrations. You&apos;ll get a dated plan after discovery.{" "}
-            <Ph>[TYPICAL TIMELINE]</Ph>
+            It depends on page count, content readiness and integrations. You&apos;ll get a dated plan after discovery.
           </>
         ),
       },

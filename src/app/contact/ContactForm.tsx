@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Fragment, useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent } from "react";
-import { Ph } from "@/components/ui/Flag";
 import { Arrow, Icon } from "@/components/ui/Icon";
 import { ROUTES, SITE } from "@/lib/site";
 import s from "./ContactForm.module.css";
@@ -373,8 +372,7 @@ export function ContactForm() {
             <div className="v-notice v-notice--warn">
               <Icon name="info" size={20} strokeWidth={2} style={{ marginTop: 2 }} />
               <span>
-                <strong>Not sent yet.</strong> This form still needs to be connected to a submission service{" "}
-                <Ph>[FORM ENDPOINT]</Ph>. Until then, send these details by email and we&apos;ll reply from there.
+                <strong>Not sent yet.</strong> This form still needs to be connected to a submission service. Until then, send these details by email and we&apos;ll reply from there.
               </span>
             </div>
           )}

@@ -15,7 +15,7 @@ export const SITE = {
  * Amber "verify before publishing" flags and [PLACEHOLDER] chips from the design review.
  * Leave on while copy is being finalised; set to false to hide every flag site-wide.
  */
-export const SHOW_CONTENT_FLAGS = true;
+export const SHOW_CONTENT_FLAGS = false;
 
 export const ROUTES = {
   home: "/",
