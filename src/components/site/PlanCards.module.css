@@ -9,11 +9,10 @@
 .headline { margin-top: 14px; font-size: clamp(1.3rem, 1.7vw, 1.55rem); line-height: 1.2; letter-spacing: -.02em; }
 .note { font-size: 13px; line-height: 1.5; color: var(--fg4); }
 
-.groups { display: flex; flex-direction: column; flex: 1; }
-.group { display: flex; flex-direction: column; gap: 12px; padding-block: 18px; border-bottom: 1px dashed var(--line2); }
-.groupTitle { font: 500 11px/1.3 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg4); }
+/* One continuous checklist under the header — no section headings, so the card stays compact. */
+.features { display: flex; flex-direction: column; flex: 1; padding-top: 22px; }
 
-.list { display: flex; flex-direction: column; gap: 11px; }
+.list { display: flex; flex-direction: column; gap: 10px; }
 .list li { display: flex; gap: 10px; align-items: flex-start; }
 .tick {
   width: 18px; height: 18px; flex: none; margin-top: 2px; border-radius: 50%; display: grid; place-items: center;

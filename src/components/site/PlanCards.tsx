@@ -58,13 +58,8 @@ export function PlanCards({ idPrefix, headingLevel = 3 }: { idPrefix: string; he
               <p className={s.note}>{plan.note}</p>
             </header>
 
-            <div className={s.groups}>
-              {plan.groups.map((group) => (
-                <div key={group.title} className={s.group}>
-                  <p className={s.groupTitle}>{group.title}</p>
-                  <ItemList items={group.items} />
-                </div>
-              ))}
+            <div className={s.features}>
+              <ItemList items={plan.items} />
               {plan.highlight && (
                 <div className={s.highlight}>
                   <p className={s.hlTitle}>

@@ -9,6 +9,7 @@ export type PlanItem = {
   chips?: string[];
 };
 
+/** A titled list — used for the glowing highlight box. */
 export type PlanGroup = { title: string; items: PlanItem[] };
 
 export type Plan = {
@@ -18,7 +19,8 @@ export type Plan = {
   headline: string;
   note: string;
   popular?: boolean;
-  groups: PlanGroup[];
+  /** One continuous checklist (no section headings), so the card reads compact. */
+  items: PlanItem[];
   /** Optional glowing box at the foot of the feature list. */
   highlight?: PlanGroup;
   cta: { label: string; href: string };
@@ -39,31 +41,16 @@ export const PLANS: Plan[] = [
     tagline: "Single location. Core channels.",
     headline: "Best for new and growing practices.",
     note: "Shaped around your specialty and local market. We size the plan to fit.",
-    groups: [
-      {
-        title: "Reputation",
-        items: [{ text: "Review monitoring & alerts" }],
-      },
-      {
-        title: "Website & foundation",
-        items: [
-          { text: "Custom website", note: "Hosting · speed monitoring · accessibility checks" },
-          WEBSITE_OWNERSHIP,
-          { text: "Google Business Profile optimization" },
-        ],
-      },
-      {
-        title: "SEO coverage",
-        items: [
-          { text: "SEO keyword research" },
-          { text: "Local SEO for your core services" },
-          { text: "AI search visibility", note: "Structured data & consistent practice facts", chips: AI_PLATFORMS },
-        ],
-      },
-      {
-        title: "Analytics & support",
-        items: [GOOGLE_ANALYTICS, LIVE_SUPPORT],
-      },
+    items: [
+      { text: "Review monitoring & alerts" },
+      { text: "Custom website", note: "Hosting · speed monitoring · accessibility checks" },
+      WEBSITE_OWNERSHIP,
+      { text: "Google Business Profile optimization" },
+      { text: "SEO keyword research" },
+      { text: "Local SEO for your core services" },
+      { text: "AI search visibility", note: "Structured data & consistent practice facts", chips: AI_PLATFORMS },
+      GOOGLE_ANALYTICS,
+      LIVE_SUPPORT,
     ],
     cta: { label: "Start with Essential", href: ROUTES.contact },
   },
@@ -74,37 +61,20 @@ export const PLANS: Plan[] = [
     headline: "What most established practices choose.",
     note: "Shaped around your specialty and local market. We size the plan to fit.",
     popular: true,
-    groups: [
-      {
-        title: "Reputation",
-        items: [
-          { text: "Automated review requests & monitoring" },
-          { text: "EHR/EMR integrations", note: "Review requests triggered by completed visits" },
-          { text: "70+ online profile management", note: "Listings kept accurate across directories & maps" },
-        ],
-      },
-      {
-        title: "Website & foundation",
-        items: [
-          { text: "Custom website", note: "Conversion-focused patient paths · mobile-first booking" },
-          WEBSITE_OWNERSHIP,
-          { text: "HTML5 build" },
-          { text: "Google Business Profile optimization" },
-        ],
-      },
-      {
-        title: "SEO coverage",
-        items: [
-          { text: "Blogs" },
-          { text: "Medical schema markup" },
-          { text: "JSON-LD structured data" },
-          { text: "AI search visibility", note: "AI visibility monitoring", chips: AI_PLATFORMS },
-        ],
-      },
-      {
-        title: "Leads & messaging",
-        items: [{ text: "Lead management" }, { text: "Two-way texting" }],
-      },
+    items: [
+      { text: "Automated review requests & monitoring" },
+      { text: "EHR/EMR integrations", note: "Review requests triggered by completed visits" },
+      { text: "70+ online profile management", note: "Listings kept accurate across directories & maps" },
+      { text: "Custom website", note: "Conversion-focused patient paths · mobile-first booking" },
+      WEBSITE_OWNERSHIP,
+      { text: "HTML5 build" },
+      { text: "Google Business Profile optimization" },
+      { text: "Blogs" },
+      { text: "Medical schema markup" },
+      { text: "JSON-LD structured data" },
+      { text: "AI search visibility", note: "AI visibility monitoring", chips: AI_PLATFORMS },
+      { text: "Lead management" },
+      { text: "Two-way texting" },
     ],
     highlight: {
       title: "Growth layer",
@@ -127,30 +97,15 @@ export const PLANS: Plan[] = [
     tagline: "Two or more locations. Every location.",
     headline: "Built for multi-location groups.",
     note: "Group structure and custom integrations factored in.",
-    groups: [
-      {
-        title: "Foundation",
-        items: [
-          {
-            text: "Everything in Growth, for every location",
-            note: "Reputation · website · SEO · AI visibility — scaled per location",
-          },
-          OFFSITE_SEO,
-        ],
-      },
-      {
-        title: "Multi-location",
-        items: [{ text: "Location pages & profiles for every office" }, { text: "Consolidated multi-location reporting" }],
-      },
-      {
-        title: "Analytics & support",
-        items: [
-          GOOGLE_ANALYTICS,
-          { text: "Multiple & custom integrations" },
-          { text: "Named team & priority support" },
-          LIVE_SUPPORT,
-        ],
-      },
+    items: [
+      { text: "Everything in Growth, for every location", note: "Reputation · website · SEO · AI visibility — scaled per location" },
+      OFFSITE_SEO,
+      { text: "Location pages & profiles for every office" },
+      { text: "Consolidated multi-location reporting" },
+      GOOGLE_ANALYTICS,
+      { text: "Multiple & custom integrations" },
+      { text: "Named team & priority support" },
+      LIVE_SUPPORT,
     ],
     cta: { label: "Talk to us about your group", href: ROUTES.contact },
   },

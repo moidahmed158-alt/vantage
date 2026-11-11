@@ -1,34 +1,11 @@
 /* =====================================================================
-   Integrations directory — filters, result cards, inline detail, empty state.
+   Integrations directory — search, result cards, inline detail, empty state.
    Selectors that override a global v-* class are scoped one level deeper
    (e.g. `.grid .card`) so they win regardless of stylesheet order.
    ===================================================================== */
 
-.layout {
-  display: grid;
-  grid-template-columns: minmax(0, 268px) minmax(0, 1fr);
-  gap: clamp(32px, 3.4vw, 48px);
-  align-items: start;
-}
-
-/* ---------- filters ---------- */
-.filters { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
-/* Sticky only where the whole filter column fits on screen, so it never needs its own scroll. */
-@media (min-width: 1081px) and (min-height: 1000px) {
-  .filters { position: sticky; top: calc(var(--hdr-h) + 24px); }
-}
-.group { border: 0; padding: 0; margin: 0; min-width: 0; min-inline-size: 0; }
-.legend { padding: 0; margin-bottom: 10px; }
-
-.catList { display: flex; flex-direction: column; gap: 6px; }
-.statList { display: flex; flex-wrap: wrap; gap: 6px; }
-
-.catList > .chip { width: 100%; justify-content: space-between; border-radius: 12px; text-align: left; }
-.group .chip { transition: border-color .2s, background-color .2s, box-shadow .25s, color .2s, transform .2s var(--ease); }
-.group .chip:active { transform: scale(.97); }
-.chip[data-zero="true"]:not([aria-pressed="true"]) { color: var(--fg4); border-color: var(--line2); }
-.chip[data-zero="true"]:not([aria-pressed="true"]):hover { color: var(--fg2); border-color: var(--line4); }
-.chip :global(.v-count) { min-width: 2ch; text-align: right; transition: color .2s; }
+.layout { display: flex; flex-direction: column; gap: 24px; }
+.searchField { max-width: 640px; }
 
 /* ---------- results ---------- */
 .results { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
@@ -91,7 +68,6 @@
 }
 .cardOn .initial { border-color: rgba(143, 224, 255, .7); box-shadow: 0 0 18px -4px rgba(47, 140, 255, .9); }
 .cardName { font-size: 17px; line-height: 1.25; color: var(--fg); overflow-wrap: anywhere; }
-.grid .cardCat { font-size: 10.5px; }
 .cardDesc { font-size: 14px; color: var(--fg3); line-height: 1.45; }
 .cardMore {
   margin-top: auto;
@@ -136,7 +112,6 @@
 }
 .detailHead { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
 .detailIntro { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.grid .detailCat { color: var(--cyan2); }
 .grid .detailTitle { font-size: clamp(1.8rem, 3vw, 2.6rem); overflow-wrap: anywhere; }
 .detailDesc { color: var(--fg2); max-width: 60ch; }
 .detailHead .close {
@@ -192,33 +167,7 @@
 /* =====================================================================
    Responsive
    ===================================================================== */
-@media (max-width: 1080px) {
-  .layout { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .filters { gap: 22px; }
-  .catList { flex-direction: row; flex-wrap: wrap; }
-  .catList > .chip { width: auto; border-radius: 999px; }
-}
-
-/* Phones: each chip row becomes a contained horizontal scroller that bleeds to the
-   screen edges (never the page), with soft fades hinting at more chips. */
 @media (max-width: 760px) {
-  .catList,
-  .statList {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    margin-inline: calc(var(--gutter) * -1);
-    padding: 6px var(--gutter);
-    scroll-padding-inline: var(--gutter);
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
-  }
-  .catList::-webkit-scrollbar,
-  .statList::-webkit-scrollbar { display: none; }
-  .catList > .chip,
-  .statList > .chip { flex: none; scroll-snap-align: start; white-space: nowrap; }
-  .legend { margin-bottom: 4px; }
   .grid .detailTitle { font-size: clamp(1.6rem, 7vw, 2rem); }
 }
 

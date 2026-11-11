@@ -4,7 +4,7 @@ import { useId, useRef, type FormEvent } from "react";
 import { flushSync } from "react-dom";
 import { Icon } from "@/components/ui/Icon";
 import { SITE } from "@/lib/site";
-import { FIELD_ERRORS, REQUEST_CATEGORIES, validateRequest, type RequiredField } from "./data";
+import { FIELD_ERRORS, validateRequest, type RequiredField } from "./data";
 import { useRequestForm } from "./RequestContext";
 import styles from "./RequestForm.module.css";
 
@@ -15,7 +15,7 @@ const FIELD_ORDER = Object.keys(FIELD_ERRORS) as RequiredField[];
 
 /** "Request an integration assessment" form: validation on submit, then the "ready — not sent" notice. */
 export function RequestForm() {
-  const { fields, errors, sent, setField, setErrors, setSent, softwareRef, categoryRef } = useRequestForm();
+  const { fields, errors, sent, setField, setErrors, setSent, softwareRef } = useRequestForm();
   const uid = useId();
   const id = (k: string) => `${uid}-${k}`;
   const practiceRef = useRef<HTMLInputElement>(null);
@@ -91,41 +91,21 @@ export function RequestForm() {
         </div>
       </div>
 
-      <div className="v-row2">
-        <div className="v-field">
-          <label className="v-label" htmlFor={id("software")}>
-            Software name
-          </label>
-          <input
-            ref={softwareRef}
-            id={id("software")}
-            className="v-input"
-            type="text"
-            autoComplete="off"
-            value={fields.software}
-            onChange={(e) => setField("software", e.target.value)}
-            {...a11y("software")}
-          />
-          {error("software")}
-        </div>
-        <div className="v-field">
-          <label className="v-label" htmlFor={id("category")}>
-            Category
-          </label>
-          <select
-            ref={categoryRef}
-            id={id("category")}
-            className="v-input"
-            value={fields.category}
-            onChange={(e) => setField("category", e.target.value)}
-          >
-            {REQUEST_CATEGORIES.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className="v-field">
+        <label className="v-label" htmlFor={id("software")}>
+          Software name
+        </label>
+        <input
+          ref={softwareRef}
+          id={id("software")}
+          className="v-input"
+          type="text"
+          autoComplete="off"
+          value={fields.software}
+          onChange={(e) => setField("software", e.target.value)}
+          {...a11y("software")}
+        />
+        {error("software")}
       </div>
 
       <div className="v-row2">

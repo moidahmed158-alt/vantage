@@ -1,37 +1,31 @@
 /* =====================================================================
-   Integrations directory + assessment form data — verbatim from the design.
-   Edit copy, categories, scope notes, statuses and directory rows here.
+   Integrations directory + assessment form data.
+   The page is about one job: connecting practice software so review requests go out after
+   every visit. Only systems that serve reviews & reputation are listed.
+   Edit categories, scope notes, statuses and directory rows here.
    ===================================================================== */
 
-export type CategoryKey = "ehr" | "pm" | "sched" | "crm" | "reviews" | "msg" | "analytics" | "ads" | "cms" | "interop";
+export type CategoryKey = "ehr" | "pm" | "sched" | "reviews" | "msg" | "interop";
 export type StatusKey = "native" | "connector" | "custom" | "planned" | "assess";
 
-/** Category labels — used by the directory filters, card tags, search and the form's Category select. */
+/** Category labels. Not shown as filters or tags; the directory search still matches them (e.g. "EHR"). */
 export const CAT: Record<CategoryKey, string> = {
   ehr: "EHR / EMR",
   pm: "Practice management",
   sched: "Scheduling & booking",
-  crm: "CRM",
   reviews: "Reviews & reputation",
   msg: "Patient messaging",
-  analytics: "Analytics & call tracking",
-  ads: "Ad platforms",
-  cms: "Website & CMS",
   interop: "Interoperability",
 };
 
-/** "Typical connection scope" shown in the detail view, per category. */
+/** "How it powers your reviews" shown in the detail view, per category. */
 export const SCOPE: Record<CategoryKey, string> = {
-  ehr: "Appointment and visit-completion events for attribution and review timing. Clinical data stays out of marketing systems.",
-  pm: "New-patient appointments, appointment types and visit status for attribution, recall and review requests.",
-  sched: "Live availability on your website and booking-source tracking.",
-  crm: "Lead capture, routing, follow-up tasks and pipeline reporting.",
-  reviews: "Profile accuracy, review monitoring and response workflows.",
-  msg: "Visit-triggered review requests and reminders — without health details in messages.",
-  analytics: "Privacy-conscious measurement of calls, forms and bookings.",
-  ads: "Conversion signals for campaign optimization, configured to exclude health information.",
-  cms: "Website builds, forms, structured data and booking integrations.",
-  interop: "One connection to many EHRs, limited to the appointment and visit events marketing needs. Clinical data stays out of marketing systems.",
+  ehr: "Visit-completion events that trigger a review request at the right moment. Clinical data stays out of marketing systems.",
+  pm: "Completed appointments and visit status, used to time review requests and avoid asking the same patient twice.",
+  sched: "Appointment status, so review requests follow completed visits rather than bookings.",
+  reviews: "Profile accuracy, new-review alerts and response drafting, all in one place.",
+  msg: "Review requests sent by text or email after the visit — without health details in messages.",
+  interop: "One connection to many EHRs, limited to the visit events that trigger review requests. Clinical data stays out of marketing systems.",
 };
 
 /** Support status labels. Chip and legend styling lives in Status.module.css (one class per key). */
@@ -43,8 +37,6 @@ export const ST: Record<StatusKey, string> = {
   assess: "Assessment required",
 };
 
-export const CATEGORY_KEYS = Object.keys(CAT) as CategoryKey[];
-export const STATUS_KEYS = Object.keys(ST) as StatusKey[];
 
 type Row = {
   name: string;
@@ -75,8 +67,6 @@ const ROWS: Row[] = [
   { name: "Denticon", cat: "pm", desc: "Cloud dental practice management for groups (Planet DDS).", status: "assess" },
   { name: "NexHealth", cat: "sched", desc: "Online booking, forms and messaging that sync with many PM systems.", status: "assess" },
   { name: "Zocdoc", cat: "sched", desc: "Patient-facing provider search and online booking marketplace.", status: "assess" },
-  { name: "HubSpot", cat: "crm", desc: "CRM and marketing automation platform.", status: "assess" },
-  { name: "Salesforce Health Cloud", cat: "crm", desc: "Healthcare-focused CRM built on Salesforce.", status: "assess" },
   { name: "Google Business Profile", cat: "reviews", desc: "Your listing in Google Search and Maps, including reviews.", status: "assess" },
   { name: "Healthgrades", cat: "reviews", desc: "Provider directory and patient ratings site.", status: "assess" },
   { name: "Yelp", cat: "reviews", desc: "Local business listings and reviews.", status: "assess" },
@@ -84,14 +74,6 @@ const ROWS: Row[] = [
   { name: "Solutionreach", cat: "msg", desc: "Patient reminders, recall and two-way texting.", status: "assess" },
   { name: "RevenueWell", cat: "msg", desc: "Dental marketing and patient communication platform.", status: "assess" },
   { name: "Klara", cat: "msg", desc: "Patient messaging and engagement, now part of ModMed.", status: "assess" },
-  { name: "Google Analytics 4", cat: "analytics", desc: "Website analytics — configured to avoid collecting health information.", status: "assess" },
-  { name: "Google Tag Manager", cat: "analytics", desc: "Tag management for analytics and conversion tracking.", status: "assess" },
-  { name: "CallRail", cat: "analytics", desc: "Call tracking and marketing attribution.", status: "assess" },
-  { name: "Google Ads", cat: "ads", desc: "Search, Maps and YouTube advertising.", status: "assess" },
-  { name: "Meta Ads Manager", cat: "ads", desc: "Facebook and Instagram advertising.", status: "assess" },
-  { name: "Microsoft Advertising", cat: "ads", desc: "Bing search and partner network advertising.", status: "assess" },
-  { name: "WordPress", cat: "cms", desc: "Widely used open-source website platform.", status: "assess" },
-  { name: "Webflow", cat: "cms", desc: "Visual website builder and CMS.", status: "assess" },
 ];
 
 /**
@@ -197,7 +179,6 @@ export const CONFIRM_FIRST = [
 
 export type RequestFields = {
   software: string;
-  category: string;
   practice: string;
   name: string;
   email: string;
@@ -207,7 +188,7 @@ export type RequestFields = {
 export type RequiredField = "software" | "practice" | "name" | "email";
 export type RequestErrors = Partial<Record<RequiredField, true>>;
 
-export const EMPTY_REQUEST: RequestFields = { software: "", category: "", practice: "", name: "", email: "", notes: "" };
+export const EMPTY_REQUEST: RequestFields = { software: "", practice: "", name: "", email: "", notes: "" };
 
 /** Inline error messages. Key order is the order fields appear (and the order focus goes to). */
 export const FIELD_ERRORS: Record<RequiredField, string> = {
@@ -216,13 +197,6 @@ export const FIELD_ERRORS: Record<RequiredField, string> = {
   name: "Enter your name.",
   email: "Enter a valid email address, like name@practice.com.",
 };
-
-/** Category select options: "Not sure", every directory category, then "Other". */
-export const REQUEST_CATEGORIES: { value: string; label: string }[] = [
-  { value: "", label: "Not sure" },
-  ...CATEGORY_KEYS.map((k) => ({ value: k, label: CAT[k] })),
-  { value: "other", label: "Other" },
-];
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 

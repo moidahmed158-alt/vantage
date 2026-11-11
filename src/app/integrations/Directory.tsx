@@ -3,33 +3,10 @@
 import { Fragment, useId, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { Icon } from "@/components/ui/Icon";
-import {
-  CAT,
-  CATEGORY_KEYS,
-  CONFIRM_FIRST,
-  INTEGRATIONS,
-  SCOPE,
-  ST,
-  STATUS_KEYS,
-  type CategoryKey,
-  type Integration,
-  type StatusKey,
-} from "./data";
+import { CAT, CONFIRM_FIRST, INTEGRATIONS, SCOPE, type Integration } from "./data";
 import { useRequestPrefill } from "./RequestContext";
 import { StatusChip } from "./Status";
 import styles from "./Directory.module.css";
-
-type CatFilter = CategoryKey | "all";
-type StatusFilter = StatusKey | "all";
-
-const CAT_FILTERS: { key: CatFilter; label: string }[] = [
-  { key: "all", label: "All categories" },
-  ...CATEGORY_KEYS.map((k) => ({ key: k, label: CAT[k] })),
-];
-const STATUS_FILTERS: { key: StatusFilter; label: string }[] = [
-  { key: "all", label: "Any" },
-  ...STATUS_KEYS.map((k) => ({ key: k, label: ST[k] })),
-];
 
 /** Name, former names (`aka`), category label or description contains the query — so "chiropractic" or "Allscripts" finds a match. */
 const matches = (x: Integration, ql: string) =>
@@ -61,14 +38,12 @@ function highlight(text: string, needle: string): ReactNode {
 }
 
 /**
- * Searchable, filterable integrations directory.
+ * Searchable integrations directory — one search box, no category or status filters.
  * Selecting a system opens its detail inline, directly beneath the row it sits in
  * (full-width grid item + dense auto-flow), so it never opens off-screen on any width.
  */
 export function Directory() {
   const [q, setQ] = useState("");
-  const [cat, setCat] = useState<CatFilter>("all");
-  const [status, setStatus] = useState<StatusFilter>("all");
   const [selId, setSelId] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
   const prefill = useRequestPrefill();
@@ -83,45 +58,26 @@ export function Directory() {
   const detailRef = useRef<HTMLElement>(null);
   const cardRefs = useRef(new Map<string, HTMLButtonElement>());
 
-  // ---- derived (mirrors the design's renderVals) ----
+  // ---- derived ----
   const qTrim = q.trim();
   const ql = qTrim.toLowerCase();
-  const byQ = ql ? INTEGRATIONS.filter((x) => matches(x, ql)) : INTEGRATIONS;
-  const list = byQ.filter((x) => (cat === "all" || x.cat === cat) && (status === "all" || x.status === status));
-  const catCount = (k: CatFilter) => (k === "all" ? byQ.length : byQ.filter((x) => x.cat === k).length);
-  const statusCount = (k: StatusFilter) => (k === "all" ? byQ.length : byQ.filter((x) => x.status === k).length);
-  const filtered = !!ql || cat !== "all" || status !== "all";
+  const list = ql ? INTEGRATIONS.filter((x) => matches(x, ql)) : INTEGRATIONS;
   const visible = showAll ? list : list.slice(0, PAGE);
   const hiddenCount = list.length - visible.length;
   const resultLabel =
     hiddenCount > 0 ? `${visible.length} of ${list.length} systems`
     : list.length === 1 ? "1 system"
     : `${list.length} systems`;
-  // With no search text, the empty state names the active filter(s) instead of an empty “”.
-  const missing =
-    qTrim || [cat !== "all" ? CAT[cat] : "", status !== "all" ? ST[status] : ""].filter(Boolean).join(" · ");
 
   // ---- actions ----
-  // Every new search or filter starts from the first page of results.
+  // Every new search starts from the first page of results.
   const onSearch = (value: string) => {
     setQ(value);
     setSelId(null);
     setShowAll(false);
   };
-  const pickCat = (k: CatFilter) => {
-    setCat(k);
-    setSelId(null);
-    setShowAll(false);
-  };
-  const pickStatus = (k: StatusFilter) => {
-    setStatus(k);
-    setSelId(null);
-    setShowAll(false);
-  };
-  const clearAll = (e: MouseEvent<HTMLButtonElement>) => {
+  const clearSearch = (e: MouseEvent<HTMLButtonElement>) => {
     setQ("");
-    setCat("all");
-    setStatus("all");
     setSelId(null);
     setShowAll(false);
     // The clear button unmounts; keyboard users continue from the search field.
@@ -152,71 +108,27 @@ export function Directory() {
 
   return (
     <div className={styles.layout}>
-      <aside className={styles.filters} aria-label="Filters">
-        <div className="v-field">
-          <label className="v-label" htmlFor={searchId}>
-            Search by name
-          </label>
-          <div className="v-search">
-            <Icon name="search" size={20} strokeWidth={2} />
-            <input
-              ref={searchRef}
-              id={searchId}
-              className="v-input"
-              type="search"
-              placeholder="e.g. Dentrix, athenahealth"
-              autoComplete="off"
-              spellCheck={false}
-              enterKeyHint="search"
-              aria-controls={resultsId}
-              value={q}
-              onChange={(e) => onSearch(e.target.value)}
-            />
-          </div>
+      <div className={`v-field ${styles.searchField}`}>
+        <label className="v-label" htmlFor={searchId}>
+          Search for your software
+        </label>
+        <div className="v-search">
+          <Icon name="search" size={20} strokeWidth={2} />
+          <input
+            ref={searchRef}
+            id={searchId}
+            className="v-input"
+            type="search"
+            placeholder="e.g. Dentrix, athenahealth, Open Dental"
+            autoComplete="off"
+            spellCheck={false}
+            enterKeyHint="search"
+            aria-controls={resultsId}
+            value={q}
+            onChange={(e) => onSearch(e.target.value)}
+          />
         </div>
-
-        <fieldset className={styles.group}>
-          <legend className={`v-tag ${styles.legend}`}>Category</legend>
-          <div className={styles.catList}>
-            {CAT_FILTERS.map((c) => {
-              const n = catCount(c.key);
-              return (
-                <button
-                  key={c.key}
-                  type="button"
-                  className={`v-chip ${styles.chip}`}
-                  aria-pressed={cat === c.key}
-                  data-zero={n === 0 ? "true" : undefined}
-                  onClick={() => pickCat(c.key)}
-                >
-                  {c.label} <span className="v-count">{n}</span>
-                </button>
-              );
-            })}
-          </div>
-        </fieldset>
-
-        <fieldset className={styles.group}>
-          <legend className={`v-tag ${styles.legend}`}>Status</legend>
-          <div className={styles.statList}>
-            {STATUS_FILTERS.map((st) => {
-              const n = statusCount(st.key);
-              return (
-                <button
-                  key={st.key}
-                  type="button"
-                  className={`v-chip ${styles.chip}`}
-                  aria-pressed={status === st.key}
-                  data-zero={n === 0 ? "true" : undefined}
-                  onClick={() => pickStatus(st.key)}
-                >
-                  {st.label} <span className="v-count">{n}</span>
-                </button>
-              );
-            })}
-          </div>
-        </fieldset>
-      </aside>
+      </div>
 
       <div id={resultsId} className={styles.results}>
         <div className={styles.bar}>
@@ -224,9 +136,9 @@ export function Directory() {
             <span className="v-live" aria-hidden="true" />
             {resultLabel}
           </p>
-          {filtered && (
-            <button type="button" className={`v-alink ${styles.clear}`} onClick={clearAll}>
-              Clear filters
+          {qTrim && (
+            <button type="button" className={`v-alink ${styles.clear}`} onClick={clearSearch}>
+              Clear search
             </button>
           )}
         </div>
@@ -249,21 +161,17 @@ export function Directory() {
                       aria-expanded={on}
                       aria-controls={on ? detailId : undefined}
                       aria-labelledby={`${base}-n`}
-                      aria-describedby={`${base}-c ${base}-s ${base}-d`}
+                      aria-describedby={`${base}-d`}
                       onClick={() => toggle(x.id)}
                     >
                       <span className={styles.cardTop}>
                         <span className={styles.initial} aria-hidden="true">
                           {x.name.charAt(0)}
                         </span>
-                        <StatusChip status={x.status} id={`${base}-s`} />
                       </span>
                       <strong id={`${base}-n`} className={styles.cardName}>
                         {highlight(x.name, ql)}
                       </strong>
-                      <span id={`${base}-c`} className={`v-tag ${styles.cardCat}`}>
-                        {highlight(CAT[x.cat], ql)}
-                      </span>
                       <span id={`${base}-d`} className={styles.cardDesc}>
                         {highlight(x.desc, ql)}
                       </span>
@@ -284,7 +192,6 @@ export function Directory() {
                       >
                         <div className={styles.detailHead}>
                           <div className={styles.detailIntro}>
-                            <span className={`v-tag ${styles.detailCat}`}>{CAT[x.cat]}</span>
                             <h3 id={detailTitleId} className={`v-display ${styles.detailTitle}`}>
                               {x.name}
                             </h3>
@@ -300,7 +207,7 @@ export function Directory() {
                             <StatusChip status={x.status} large />
                           </div>
                           <div className={styles.fact}>
-                            <span className="v-tag">Typical connection scope</span>
+                            <span className="v-tag">How it powers your reviews</span>
                             <p className={styles.factText}>{SCOPE[x.cat]}</p>
                           </div>
                           <div className={styles.fact}>
@@ -315,7 +222,7 @@ export function Directory() {
                         <a
                           className={`v-btn v-btn--primary ${styles.detailCta}`}
                           href="#request"
-                          onClick={() => prefill(x.name, x.cat)}
+                          onClick={() => prefill(x.name)}
                         >
                           Request an assessment for {x.name}
                         </a>
@@ -342,23 +249,17 @@ export function Directory() {
             <span className="v-icon">
               <Icon name="search" size={22} strokeWidth={1.8} />
             </span>
-            <h3 className={`v-h3 ${styles.emptyTitle}`}>No listed match for “{missing}”.</h3>
+            <h3 className={`v-h3 ${styles.emptyTitle}`}>No listed match for “{qTrim}”.</h3>
             <p className="v-p">
               That doesn&apos;t mean we can&apos;t connect it. Tell us what you run and we&apos;ll assess what&apos;s
               possible — natively, through a connector, or with custom work.
             </p>
             <div className="v-btn-row">
-              {qTrim ? (
-                <a className="v-btn v-btn--primary" href="#request" onClick={() => prefill(qTrim, "")}>
-                  Request an assessment for “{qTrim}”
-                </a>
-              ) : (
-                <a className="v-btn v-btn--primary" href="#request">
-                  Request an integration assessment
-                </a>
-              )}
-              <button type="button" className="v-btn v-btn--ghost" onClick={clearAll}>
-                {qTrim ? "Clear search" : "Clear filters"}
+              <a className="v-btn v-btn--primary" href="#request" onClick={() => prefill(qTrim)}>
+                Request an assessment for “{qTrim}”
+              </a>
+              <button type="button" className="v-btn v-btn--ghost" onClick={clearSearch}>
+                Clear search
               </button>
             </div>
           </div>

@@ -11,6 +11,7 @@ import { Radar } from "@/components/ui/Radar";
 import { SectionHead } from "@/components/ui/Section";
 import { ROUTES, SITE, specialtyHref } from "@/lib/site";
 import Link from "next/link";
+import { AiPreview } from "./_home/AiPreview";
 import { Journey } from "./_home/Journey";
 import s from "./home.module.css";
 
@@ -289,6 +290,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ============ AI ANSWER PREVIEW ============ */}
+      <AiPreview />
 
       {/* ============ PROOF ============ */}
       <section className="v-sec--tight">

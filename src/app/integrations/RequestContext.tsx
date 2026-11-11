@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
-import { EMPTY_REQUEST, type CategoryKey, type RequestErrors, type RequestFields, type RequiredField } from "./data";
+import { EMPTY_REQUEST, type RequestErrors, type RequestFields, type RequiredField } from "./data";
 
 /**
  * Shared state for the integration-assessment form, so the directory's
@@ -15,10 +15,9 @@ type RequestCtx = {
   setField: (key: keyof RequestFields, value: string) => void;
   setErrors: (errors: RequestErrors) => void;
   setSent: (sent: boolean) => void;
-  /** Prefill Software name (and Category, when known), then focus the field once the #request jump starts. */
-  prefill: (software: string, category?: CategoryKey | "") => void;
+  /** Prefill Software name, then focus the field once the #request jump starts. */
+  prefill: (software: string) => void;
   softwareRef: RefObject<HTMLInputElement | null>;
-  categoryRef: RefObject<HTMLSelectElement | null>;
 };
 
 type Prefill = RequestCtx["prefill"];
@@ -53,7 +52,6 @@ export function RequestProvider({ children }: { children: ReactNode }) {
   const [errors, setErrors] = useState<RequestErrors>({});
   const [sent, setSent] = useState(false);
   const softwareRef = useRef<HTMLInputElement>(null);
-  const categoryRef = useRef<HTMLSelectElement>(null);
 
   const setField = useCallback((key: keyof RequestFields, value: string) => {
     setFields((f) => ({ ...f, [key]: value }));
@@ -61,8 +59,8 @@ export function RequestProvider({ children }: { children: ReactNode }) {
     setSent(false);
   }, []);
 
-  const prefill = useCallback((software: string, category: CategoryKey | "" = "") => {
-    setFields((f) => ({ ...f, software, category: category || f.category }));
+  const prefill = useCallback((software: string) => {
+    setFields((f) => ({ ...f, software }));
     setErrors((e) => (e.software ? without(e, "software") : e));
     setSent(false);
     // The link's own #request jump runs after this handler; focus without fighting its scroll.
@@ -71,12 +69,11 @@ export function RequestProvider({ children }: { children: ReactNode }) {
       if (!input) return;
       input.focus({ preventScroll: true });
       flash(input);
-      if (category) flash(categoryRef.current);
     });
   }, []);
 
   const value = useMemo<RequestCtx>(
-    () => ({ fields, errors, sent, setField, setErrors, setSent, prefill, softwareRef, categoryRef }),
+    () => ({ fields, errors, sent, setField, setErrors, setSent, prefill, softwareRef }),
     [fields, errors, sent, setField, prefill],
   );
 

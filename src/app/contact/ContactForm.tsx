@@ -23,42 +23,9 @@ const GOALS = [
   { value: "reviews", label: "Stronger reviews & reputation" },
   { value: "visibility", label: "Visibility in search & AI answers" },
   { value: "website", label: "A new or better website" },
-  { value: "software", label: "Connecting our software" },
-  { value: "reporting", label: "Clearer reporting on results" },
 ] as const;
 
 type Option = { value: string; label: string };
-
-/** Step 1 — Specialty select. Labels are also used in the summary and the email body. */
-const SPECIALTIES: Option[] = [
-  { value: "general-dental", label: "General & family dentistry" },
-  { value: "ortho", label: "Orthodontics" },
-  { value: "implants", label: "Implants & cosmetic dentistry" },
-  { value: "pedo", label: "Pediatric dentistry" },
-  { value: "derm", label: "Dermatology" },
-  { value: "plastics", label: "Plastic & aesthetic surgery" },
-  { value: "medspa", label: "Medical spa" },
-  { value: "primary", label: "Primary care" },
-  { value: "orthopedics", label: "Orthopedics" },
-  { value: "other", label: "Other specialty" },
-];
-
-/** Step 1 — Locations select. */
-const LOCATIONS: Option[] = [
-  { value: "1", label: "1 location" },
-  { value: "2-5", label: "2–5 locations" },
-  { value: "6+", label: "6 or more" },
-  { value: "new", label: "Opening soon" },
-];
-
-/** Step 2 — Monthly marketing budget select. */
-const BUDGETS: Option[] = [
-  { value: "", label: "Prefer not to say" },
-  { value: "lt5", label: "Under $5,000" },
-  { value: "5-15", label: "$5,000–$15,000" },
-  { value: "15-40", label: "$15,000–$40,000" },
-  { value: "40+", label: "Over $40,000" },
-];
 
 /** Step 3 — Your role select. */
 const ROLES: Option[] = [
@@ -75,7 +42,6 @@ const STEPS = ["Practice", "Goals", "You"] as const;
 /** Inline error messages. Key order is the order fields appear, used to pick the first invalid field. */
 const ERRORS = {
   practice: "Enter your practice name.",
-  specialty: "Choose the closest specialty.",
   goals: "Choose at least one goal.",
   name: "Enter your name.",
   email: "Enter a valid email, like name@practice.com.",
@@ -99,11 +65,8 @@ type Errors = Partial<Record<ErrorKey, true>>;
 type Fields = {
   topic: Topic;
   practice: string;
-  specialty: string;
-  locations: string;
   website: string;
   software: string;
-  budget: string;
   notes: string;
   name: string;
   role: string;
@@ -117,11 +80,8 @@ type TextField = Exclude<keyof Fields, "topic" | "consent">;
 const INITIAL_FIELDS: Fields = {
   topic: "call",
   practice: "",
-  specialty: "",
-  locations: "1",
   website: "",
   software: "",
-  budget: "",
   notes: "",
   name: "",
   role: "owner",
@@ -137,7 +97,6 @@ function validateStep(step: Step, f: Fields, goals: readonly Goal[]): Errors {
   const e: Errors = {};
   if (step === 1) {
     if (!f.practice.trim()) e.practice = true;
-    if (!f.specialty) e.specialty = true;
   }
   if (step === 2) {
     if (!goals.length) e.goals = true;
@@ -156,10 +115,9 @@ function summarise(f: Fields, goals: readonly Goal[]) {
     .map((g) => g.label)
     .join(", ");
   const topicLabel = (TOPICS.find((t) => t.value === f.topic) ?? TOPICS[0]).label;
-  const specLabel = SPECIALTIES.find((o) => o.value === f.specialty)?.label ?? "";
   const body =
     "Interested in: " + topicLabel +
-    "\nPractice: " + f.practice + " (" + specLabel + ", " + f.locations + ")" +
+    "\nPractice: " + f.practice +
     "\nWebsite: " + f.website +
     "\nGoals: " + goalsText +
     "\nSoftware: " + f.software +
@@ -172,7 +130,7 @@ function summarise(f: Fields, goals: readonly Goal[]) {
     "?subject=" + encodeURIComponent("Strategy call request — " + f.practice) +
     "&body=" + encodeURIComponent(body);
   const firstName = f.name.trim().split(" ")[0] || "there";
-  return { goalsText, topicLabel, specLabel, mailto, firstName };
+  return { goalsText, topicLabel, mailto, firstName };
 }
 
 /**
@@ -203,7 +161,6 @@ function focusAndReveal(el: HTMLElement, form: HTMLElement | null) {
 export type StrategyCallRequest = Fields & {
   goals: Goal[];
   topicLabel: string;
-  specialtyLabel: string;
   goalsText: string;
 };
 
@@ -323,7 +280,6 @@ export function ContactForm() {
         ...fields,
         goals: [...goals],
         topicLabel: sum.topicLabel,
-        specialtyLabel: sum.specLabel,
         goalsText: sum.goalsText,
       });
       ok = result.delivered;
@@ -380,9 +336,7 @@ export function ContactForm() {
             <dt className="v-muted">Interested in</dt>
             <dd>{summary.topicLabel}</dd>
             <dt className="v-muted">Practice</dt>
-            <dd>
-              {fields.practice} · {summary.specLabel}
-            </dd>
+            <dd>{fields.practice}</dd>
             <dt className="v-muted">Goals</dt>
             <dd>{summary.goalsText}</dd>
             <dt className="v-muted">Contact</dt>
@@ -470,46 +424,6 @@ export function ContactForm() {
                 )}
               </div>
 
-              <div className="v-row2">
-                <div className="v-field">
-                  <label className="v-label" htmlFor={id("specialty")}>
-                    Specialty
-                  </label>
-                  <select
-                    id={id("specialty")}
-                    className="v-input"
-                    value={fields.specialty}
-                    onChange={onText("specialty")}
-                    aria-required="true"
-                    {...describe("specialty")}
-                  >
-                    <option value="">Select…</option>
-                    {SPECIALTIES.map((o) => (
-                      <option key={o.value} value={o.value}>
-                        {o.label}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.specialty && (
-                    <span id={errId("specialty")} className="v-err">
-                      {ERRORS.specialty}
-                    </span>
-                  )}
-                </div>
-                <div className="v-field">
-                  <label className="v-label" htmlFor={id("locations")}>
-                    Locations
-                  </label>
-                  <select id={id("locations")} className="v-input" value={fields.locations} onChange={onText("locations")}>
-                    {LOCATIONS.map((o) => (
-                      <option key={o.value} value={o.value}>
-                        {o.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
               <div className="v-field">
                 <label className="v-label" htmlFor={id("website")}>
                   Current website <span className="v-opt">(optional)</span>
@@ -562,32 +476,18 @@ export function ContactForm() {
                 )}
               </fieldset>
 
-              <div className="v-row2">
-                <div className="v-field">
-                  <label className="v-label" htmlFor={id("software")}>
-                    Practice software <span className="v-opt">(optional)</span>
-                  </label>
-                  <input
-                    id={id("software")}
-                    className="v-input"
-                    type="text"
-                    placeholder="e.g. Dentrix, athenahealth"
-                    value={fields.software}
-                    onChange={onText("software")}
-                  />
-                </div>
-                <div className="v-field">
-                  <label className="v-label" htmlFor={id("budget")}>
-                    Monthly marketing budget <span className="v-opt">(optional)</span>
-                  </label>
-                  <select id={id("budget")} className="v-input" value={fields.budget} onChange={onText("budget")}>
-                    {BUDGETS.map((o) => (
-                      <option key={o.value} value={o.value}>
-                        {o.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div className="v-field">
+                <label className="v-label" htmlFor={id("software")}>
+                  Practice software <span className="v-opt">(optional)</span>
+                </label>
+                <input
+                  id={id("software")}
+                  className="v-input"
+                  type="text"
+                  placeholder="e.g. Dentrix, athenahealth"
+                  value={fields.software}
+                  onChange={onText("software")}
+                />
               </div>
 
               <div className="v-field">
